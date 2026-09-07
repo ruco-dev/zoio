@@ -178,4 +178,4 @@ nick: Casual
 - Replayed against the lockfile: npm registry DNS was unavailable, so no advisory result or automated fix was possible; a networked replay remains required.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-07 play(Casual): in=288496 out=7793 -->
+<!-- tokens 2026-09-07 play(Casual): in=62613 out=729 -->
