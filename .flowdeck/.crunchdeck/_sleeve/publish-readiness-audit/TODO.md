@@ -2,7 +2,9 @@
 lifecycle: ritual
 recurrence: on-demand
 nick: Shark
-
+reset-on-play: true
+network: required
+worktree: clean
 ---
 
 # publish-readiness-audit

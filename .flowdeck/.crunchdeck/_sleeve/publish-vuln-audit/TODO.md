@@ -4,6 +4,7 @@ recurrence: on-demand
 nick: Casual
 reset-on-play: true
 network: required
+worktree: clean
 ---
 <!-- nick updated to Casual (was Shark) -->
 
