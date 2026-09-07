@@ -2,11 +2,17 @@
 lifecycle: ritual
 recurrence: on-demand
 nick: Casual
+reset-on-play: true
+
 
 ---
 <!-- nick updated to Casual (was Shark) -->
 
 # publish-vuln-audit
+
+> **Codex-safe temporary files:** Never run `rm`, `rm -f`, or `rm -rf`.
+> Leave `mktemp` directories for operating-system cleanup. Run npm checks as
+> separate commands rather than one nested, heavily quoted shell command.
 
 > **Sleeve resident.** Ritual card: it lives in the deck's own `_sleeve/` (`.flowdeck/.crunchdeck/_sleeve/`), is played in place, and is never melded. Play it before `publish-readiness-audit` (which gates on its freshness), or whenever "are we shipping known-vulnerable dependencies?" needs a grounded answer.
 >
