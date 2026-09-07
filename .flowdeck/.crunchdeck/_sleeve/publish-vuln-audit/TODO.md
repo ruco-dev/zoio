@@ -158,4 +158,4 @@ nick: Casual
 - Created the findings report and human follow-up at `.flowdeck/.crunchdeck/security-findings/`.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-07 play(Casual): in=66135 out=736 -->
+<!-- tokens 2026-09-07 play(Casual): in=90783 out=1319 -->
