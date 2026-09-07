@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "htllm": {
+      "command": "node",
+      "args": [
+        "/Users/ruco/projects/sitegrow/module-d-orchestrator/mcp-server/dist/index.js"
+      ]
+    }
+  }
+}

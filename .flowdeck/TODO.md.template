@@ -1,0 +1,68 @@
+---
+lifecycle: one-shot
+recurrence: on-demand
+nick: Glinder
+review: false
+reset-on-play: false
+permissions: standard
+projects: []
+params: {}
+# model:
+# skill:
+# depends:
+---
+
+# flowdeck
+
+> Human↔AI collaboration via `TODO.md` files.
+> `## BOT` is Claude's inbox — tasks Claude should complete.
+> `## HUMAN` is your inbox — things Claude needs from you.
+> Run `flowdeck play -m "<what you did>"` to commit and hand off to Claude, or `flowdeck play` to hand off without a new commit.
+
+## BOT
+- [ ] Task for Claude to do
+- [x] Completed task
+  > short note on what was done
+
+## HUMAN
+- [ ] Question needing your input?
+  > _answer:_
+- [x] Answered question
+  > _answer:_ your answer here
+
+## ACTIONS
+<!-- optional: a dormant menu of possible actions — move a line to ## BOT or ## HUMAN to activate it -->
+- [ ] some-action — [describe the input it needs]
+
+## STOCK
+<!-- optional: standing tasks kept out of ## BOT until picked up -->
+- [ ] recurring scan or check
+
+#### COMMENTS
+- Notable findings from execution: unexpected behaviour, real validations, non-obvious decisions. Added by Claude, not you.
+
+## OUTCOME
+<!-- written automatically by `play` once every ## BOT task is checked -->
+What was built, key files or changes, and how to use the deliverable.
+
+<!-- next: Glinder --> <!-- tokens 2026-06-28 play(Glinder): in=1200 out=800 -->
+
+---
+
+Reference, not boilerplate — delete any section you're not using from your own cards.
+
+- **`depends: <slug>`** (optional, right after the title) — declares this card waits on another. `turn` orders execution accordingly; `play` warns if the dependency still has open `## BOT` items (`--no-dep-check` skips the check).
+- **YAML frontmatter** (`---`-fenced block above the `# title`) — all card metadata. Supported keys:
+  - `lifecycle: one-shot | recurring | standing | ritual` — `recurring` keeps the card on the table (BOT checkboxes reset after play); `ritual` + `recurrence: on-demand` excludes the card from `turn` sweeps. Instrument cards (recurring/ritual) that don't belong on the table live in the `_sleeve/` pile — `flowdeck sleeve <card>` moves them there; they play in place, renew via `blank`, and are never melded. `flowdeck sleeve` refuses `one-shot` cards without `--force`.
+  - `recurrence: on-demand | weekly | daily | …` — `on-demand` suppresses automatic `turn` inclusion; other values are logged after play resets checkboxes
+  - `nick: Casual | Glinder | Shark | Wale` — recommended model alias; precedence: `--model` > `model:` > `nick:` > `agents.json` default
+  - `model: Shark` — hard-pins the alias, overrides `nick:`
+  - `review: true` — runs an automatic reviewer pass during `turn`
+  - `skill: <id>` — bound skill identifier (ritual cards)
+  - `projects: [a, b]` — cross-project scope (ritual cards)
+  - `permissions: standard | read-only | unrestricted` — portable execution policy; unrestricted also requires this card's exact canonical path in project-local `permissions.unrestrictedCards`
+- See `docs/card-metadata-spec.md` for the full schema and migration guide from comment markers.
+- **`> _answer:_`** stub under a `## HUMAN` question — leave it blank until you answer it, or run `flowdeck kemps` to have Claude propose an answer as `> _kemps:_`.
+- **`## ACTIONS`** / **`## STOCK`** — optional sections some decks use for dormant action menus and standing scan tasks; the CLI doesn't parse them specially, but Claude honors the convention when it sees them.
+
+> Advanced: cards can bind tool output to `$var`s — see README "Tool Binding (advanced)".

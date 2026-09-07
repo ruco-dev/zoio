@@ -4,3 +4,6 @@
 *.swo
 *~
 .env
+node_modules/
+dist/
+zoio-results/
