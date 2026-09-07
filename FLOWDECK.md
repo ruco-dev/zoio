@@ -17,3 +17,4 @@ Zoio is a local-first CLI that shows which businesses and entities appear in AI-
 <!-- Open known issues or missing pieces. Update this after each meld. -->
 
 - Live Codex and OpenAI scans require their respective local credentials; the offline suite uses a fake Codex executable for adapter coverage.
+- Publish readiness remains blocked by missing release notes and repository metadata/verification; the current audit is tracked in `.flowdeck/.crunchdeck/prepare-to-publish/`.
