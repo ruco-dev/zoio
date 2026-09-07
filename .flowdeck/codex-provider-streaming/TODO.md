@@ -38,12 +38,15 @@ params: {}
 
 - The required documentation check updated `README.md` with JSONL, progress, and timeout guidance, and updated `FLOWDECK.md` current state/known gaps.
 
+- Live validation found Node's `execFile` leaves a piped stdin open. Codex treats that pipe as supplemental input and waits; the provider now closes it immediately and uses `--ephemeral` for one-off scans. A live `Porto hotel` scan then completed with five entities and five sources.
+
 ## OUTCOME
 
 Codex scans now parse `codex exec --json` JSONL safely and retain every structured event in response provenance.
 The final completed assistant message feeds entity and citation analysis; malformed, absent, failed, and timed-out responses stop before persistence.
 CLI progress is non-sensitive, and the 120,000ms default can be changed with `--timeout MS` or `ZOIO_CODEX_TIMEOUT_MS`.
 Six offline tests pass, including deterministic fake-executable coverage; fixture smoke output was written to `/private/tmp/zoio-fixture-smoke`.
+The provider explicitly closes its empty stdin pipe and runs ephemeral Codex sessions, so a scan cannot block on nonexistent supplemental input.
 
 <!-- next: Casual -->
 

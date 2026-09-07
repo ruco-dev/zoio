@@ -1,10 +1,17 @@
 import { execFile } from "node:child_process";
-import { promisify } from "node:util";
 import type { SearchResult, ScanMode } from "./types.js";
 
-const execFileAsync = promisify(execFile);
 export interface SearchProvider { search(query: string, model?: string): Promise<SearchResult> }
 export interface CodexProviderOptions { executable?: string; timeoutMs?: number; onProgress?: (message: string) => void }
+function runCodex(executable: string, args: string[], timeoutMs: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const child = execFile(executable, args, { maxBuffer: 5_000_000, timeout: timeoutMs }, (error, stdout) => error ? reject(error) : resolve(stdout));
+    // `codex exec` reads piped stdin in addition to a prompt argument. execFile
+    // creates that pipe but leaves it open, so explicitly signal that Zoio has
+    // no supplemental input instead of making the scan wait for a timeout.
+    child.stdin?.end();
+  });
+}
 export class FixtureProvider implements SearchProvider {
   async search(query: string): Promise<SearchResult> {
     const text = `Recommended options for ${query}:\n1. Example Hotel — recommended for central location.\n2. Riverside House — a boutique choice.\nSources: https://example.com/porto-hotels and https://travel.example.org/guide`;
@@ -14,14 +21,17 @@ export class FixtureProvider implements SearchProvider {
 export class CodexProvider implements SearchProvider {
   constructor(private readonly options: CodexProviderOptions = {}) {}
   async search(query: string, model?: string): Promise<SearchResult> {
-    const args = ["exec", "--skip-git-repo-check", "--json"];
+    // A scan is an independent query, not a resumable coding session. Ephemeral
+    // mode avoids loading or updating local rollout state and prevents local
+    // session/plugin state from delaying a one-off CLI scan.
+    const args = ["exec", "--skip-git-repo-check", "--ephemeral", "--json"];
     if (model) args.push("--model", model);
     args.push(`Answer this local research query with a short numbered recommendation list and source URLs: ${query}`);
     const timeoutMs = this.options.timeoutMs ?? 120_000;
     this.options.onProgress?.("Codex scan in progress…");
     let stdout: string;
     try {
-      ({ stdout } = await execFileAsync(this.options.executable ?? "codex", args, { maxBuffer: 5_000_000, timeout: timeoutMs }));
+      stdout = await runCodex(this.options.executable ?? "codex", args, timeoutMs);
     } catch (error) {
       const timedOut = error instanceof Error && ("killed" in error || "signal" in error) && ((error as NodeJS.ErrnoException & { killed?: boolean }).killed || (error as NodeJS.ErrnoException & { signal?: string }).signal === "SIGTERM");
       if (timedOut) throw new Error(`Codex scan timed out after ${timeoutMs}ms. Increase --timeout or ZOIO_CODEX_TIMEOUT_MS and try again.`);

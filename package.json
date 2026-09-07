@@ -4,9 +4,17 @@
   "description": "Local-first AI search visibility scanner",
   "license": "MIT",
   "type": "module",
-  "bin": { "zoio": "./dist/cli.js" },
-  "files": ["dist", "README.md", "LICENSE"],
-  "engines": { "node": ">=20" },
+  "bin": {
+    "zoio": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "check": "tsc --noEmit",
@@ -16,5 +24,13 @@
     "format:check": "node scripts/format.mjs --check",
     "dev": "tsx src/cli.ts"
   },
-  "devDependencies": { "@types/node": "^22.0.0", "tsx": "^4.0.0", "typescript": "^5.0.0" }
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  },
+  "allowScripts": {
+    "esbuild@0.28.2": true,
+    "fsevents@2.3.3": true
+  }
 }
