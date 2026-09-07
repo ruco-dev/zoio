@@ -39,6 +39,7 @@ worktree: clean
 ### 2 · Tarball truth (npm scope only)
 
 - [x] Run `npm pack --dry-run` and READ the file list — never trust the `files` array, `.npmignore`, or gitignore assumptions:
+  - In Codex, run exactly `npm pack --dry-run --json --cache "$(mktemp -d /tmp/flowdeck-npm-cache.XXXXXX)"`. Do not add a cleanup clause.
   - Everything the README promises ships: content dirs the CLI reads at runtime (templates, skills, assets), `dist/`, binaries. A missing content dir ships a broken CLI that no local test catches.
   - Nothing internal leaks: `.flowdeck/`, `.claude/`, work logs, digests, `.env`, `*.tgz`.
   > Isolated-cache pack passed with 30 files including binary/docs/license and no internal leakage; compiled tests are a warning.
