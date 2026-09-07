@@ -34,76 +34,86 @@ reset-on-play: true
 
 ### 0 · Scope
 
-- [ ] Establish what is being audited before auditing anything. Read `package.json` (root), and check for `package-lock.json` / `npm-shrinkwrap.json` / `yarn.lock` / `pnpm-lock.yaml`, and a `workspaces` field. Record on this item:
+- [x] Establish what is being audited before auditing anything. Read `package.json` (root), and check for `package-lock.json` / `npm-shrinkwrap.json` / `yarn.lock` / `pnpm-lock.yaml`, and a `workspaces` field. Record on this item:
   - **package manager** (from the lockfile present — do not assume npm),
   - **publish surface**: is this an npm package (`name` + not `"private": true`), a git-only repo, or neither,
   - **workspaces**: yes/no (audit must run at the workspace root; per-package audits miss hoisted transitive deps),
   - **test command**: the `scripts.test` value, or `none` (this decides whether tier 2 is available at all).
-  > npm package `zoio@0.1.0`; npm/package-lock v3; no workspaces; test: `npm run build && node --test dist/**/*.test.js`.
-- [ ] **Degrade cleanly, do not fail.** If there is no `package.json`, this project is not an npm consumer: record verdict **N/A**, write a one-line `VULN-AUDIT.md` stating so with the date, skip to step 5, and do not mint fix tasks. (The flowdeck deck-source repo itself is exactly this case.) Same for a `package.json` with no dependencies at all.
-- [ ] If the lockfile is **absent** while dependencies exist, stop the audit path: `npm audit` needs a lockfile and `npm audit --package-lock-only` will silently resolve to *latest matching*, not to what actually ships. Record this as a **BLOCKER** finding ("no lockfile — audit result is not reproducible; run `npm install` to generate one and replay") and continue to step 5.
+  > npm package `zoio@0.1.0`; npm `package-lock.json` v3; no workspaces; test: `npm run build && node --test dist/**/*.test.js`.
+- [x] **Degrade cleanly, do not fail.** If there is no `package.json`, this project is not an npm consumer: record verdict **N/A**, write a one-line `VULN-AUDIT.md` stating so with the date, skip to step 5, and do not mint fix tasks. (The flowdeck deck-source repo itself is exactly this case.) Same for a `package.json` with no dependencies at all.
+  > Not applicable: the root package has three declared development dependencies.
+- [x] If the lockfile is **absent** while dependencies exist, stop the audit path: `npm audit` needs a lockfile and `npm audit --package-lock-only` will silently resolve to *latest matching*, not to what actually ships. Record this as a **BLOCKER** finding ("no lockfile — audit result is not reproducible; run `npm install` to generate one and replay") and continue to step 5.
+  > Not applicable: the tracked npm lockfile is present.
 
 ---
 
 ### 1 · Declared-tree audit
 
-- [ ] Run the read-only audit and capture the **JSON**, not the human table — the table rounds away the metadata the later steps need:
+- [x] Run the read-only audit and capture the **JSON**, not the human table — the table rounds away the metadata the later steps need:
   - npm: `npm audit --json`
   - pnpm: `pnpm audit --json` · yarn: `yarn npm audit --json` (Berry) / `yarn audit --json` (v1)
   Non-zero exit is the normal signal that findings exist — do not treat it as a failed command. Record the totals per severity (`critical` / `high` / `moderate` / `low` / `info`).
-  > `npm audit --json` returned DNS error `ENOTFOUND registry.npmjs.org`; all severity totals are unavailable.
-- [ ] For each advisory, extract and record: advisory title + GHSA/CVE id, severity, the vulnerable **package**, the **path** (which direct dependency pulls it in), whether it is `dev`-only, and `fixAvailable` — noting specifically whether `fixAvailable` is `true` (in-range) or an object with `isSemVerMajor: true` (tier 3).
-- [ ] **Dev-only findings are not the same class as runtime ones.** A vulnerability reachable only from `devDependencies` does not ship to consumers of the package — record it, mark it `dev`, and rank it below every runtime finding. It is still a real risk to *this* machine and CI; it is not a publish blocker.
-- [ ] `npm outdated` (or the manager's equivalent) for context only — deps several majors behind are where the next advisory lands. This is a **warning** section, never a blocker.
-  > `npm outdated --json` returned `{}`.
+  > `npm audit --json` completed with critical/high/moderate/low/info all 0.
+- [x] For each advisory, extract and record: advisory title + GHSA/CVE id, severity, the vulnerable **package**, the **path** (which direct dependency pulls it in), whether it is `dev`-only, and `fixAvailable` — noting specifically whether `fixAvailable` is `true` (in-range) or an object with `isSemVerMajor: true` (tier 3).
+  > No advisories were returned, so no advisory rows or fix classifications apply.
+- [x] **Dev-only findings are not the same class as runtime ones.** A vulnerability reachable only from `devDependencies` does not ship to consumers of the package — record it, mark it `dev`, and rank it below every runtime finding. It is still a real risk to *this* machine and CI; it is not a publish blocker.
+  > No dev-only findings; all three declared dependencies are development-only and no runtime dependencies are declared.
+- [x] `npm outdated` (or the manager's equivalent) for context only — deps several majors behind are where the next advisory lands. This is a **warning** section, never a blocker.
+  > Warning recorded: `@types/node` 22.20.1 → 26.5.0 and `typescript` 5.9.3 → 7.0.2 are major upgrades.
 
 ### 2 · Published-artifact audit (npm scope only)
 
-- [ ] The declared tree is what *we* install; the tarball is what *consumers* install. Verify the shipped artifact separately — a `bundledDependencies` entry or a vendored `dist/` can carry a vulnerable copy that `npm audit` over the working tree never sees:
+- [x] The declared tree is what *we* install; the tarball is what *consumers* install. Verify the shipped artifact separately — a `bundledDependencies` entry or a vendored `dist/` can carry a vulnerable copy that `npm audit` over the working tree never sees:
   - `npm pack --dry-run` and read the file list for vendored/bundled dependency trees (`node_modules/` inside the tarball, checked-in `vendor/`, bundled browser builds).
   - If the package is already published, audit what is live: `npm view <name> versions` for the current version, then install it into a scratch dir (`mktemp -d`) and run `npm audit --json` there. This is the number a consumer sees and is the only one that reflects *transitive* drift since the last publish.
-  > Dry-run tarball contains only LICENSE, README.md, and package.json; live-version audit is blocked by registry DNS.
-- [ ] Cross-check `dependencies` for anything the code no longer imports (a dead runtime dep is pure attack surface with zero benefit) — grep the entry points for each declared runtime dep. Record removals as `## HUMAN` (removing a dep is a `package.json` edit: tier 3).
-  > No runtime dependencies are declared, so no dead runtime dependency review is needed.
+  > Dry-run tarball has 30 files and no bundled dependencies, `node_modules/`, or vendor tree; `zoio` is unpublished (registry 404).
+- [x] Cross-check `dependencies` for anything the code no longer imports (a dead runtime dep is pure attack surface with zero benefit) — grep the entry points for each declared runtime dep. Record removals as `## HUMAN` (removing a dep is a `package.json` edit: tier 3).
+  > No runtime `dependencies` are declared, so there are no imports or removals to review.
 
 ### 3 · Supply-chain signals
 
-- [ ] Beyond CVEs, record any of these on the findings card as **warnings** — they are how the next incident starts, and none appear in `npm audit`:
+- [x] Beyond CVEs, record any of these on the findings card as **warnings** — they are how the next incident starts, and none appear in `npm audit`:
   - A direct dependency **unpublished, deprecated, or transferred** (`npm view <name> deprecated`, last-publish date years stale, maintainer change).
   - `install`/`postinstall` scripts in dependencies added since the last audit run (`npm ls --json` diff against the previous run recorded on the card).
   - Lockfile entries resolving to a **non-registry source** (git URLs, tarball URLs, `file:` outside the workspace) — these bypass registry integrity entirely.
-  > No non-registry lockfile sources; esbuild and fsevents have install scripts; registry metadata and historical diff are unavailable.
-- [ ] If the host project has a dedicated scanner configured (Dependabot alerts via `gh api`, Snyk, `osv-scanner`), read its current findings too and reconcile: an alert open there but absent here means the audit scope is wrong. Skip silently if none is configured — do not install a scanner.
+  > Registry-only lockfile; `esbuild` and optional `fsevents` have install scripts; no prior clean-run diff or dedicated scanner configuration exists.
+- [x] If the host project has a dedicated scanner configured (Dependabot alerts via `gh api`, Snyk, `osv-scanner`), read its current findings too and reconcile: an alert open there but absent here means the audit scope is wrong. Skip silently if none is configured — do not install a scanner.
+  > No Dependabot, Snyk, or osv-scanner configuration was found.
 
 ---
 
 ### 4 · Bounded auto-fix (tier 2 — conditional)
 
 
-- [ ] Record the pre-fix lockfile state so the revert is exact: `git rev-parse HEAD -- <lockfile>` / confirm the lockfile is tracked and unmodified.
-- [ ] Run `npm audit fix` — **without `--force`, always**. Then verify the boundary held, and treat any breach as a revert-now condition:
+- [x] Record the pre-fix lockfile state so the revert is exact: `git rev-parse HEAD -- <lockfile>` / confirm the lockfile is tracked and unmodified.
+  > Skipped: clean audit left no eligible tier-2 fix to attempt.
+- [x] Run `npm audit fix` — **without `--force`, always**. Then verify the boundary held, and treat any breach as a revert-now condition:
   - `git diff --stat` must show **the lockfile only**. If `package.json` changed, revert both immediately and reclassify every finding as tier 3.
   - `git diff` the lockfile for any `version` that crossed a major boundary. If one did, revert and reclassify — `audit fix` is not supposed to do this without `--force`, and a surprise here means the assumption is wrong for this project.
-- [ ] Run the project's declared test command. Record the actual output (pass/fail with the error text — "should pass" is not a result).
-- [ ] If tests **fail**, or the boundary check above tripped: `git checkout -- <lockfile>` and record on the card that the auto-fix was attempted and reverted, with the failing output. This is a normal outcome, not an error — it converts those findings into `## HUMAN` tasks.
-- [ ] If tests **pass**: re-run `npm audit --json` and record the residual finding counts. Commit the lockfile alone: `git add <lockfile> && git commit -m "fix(deps): npm audit fix — <N> advisories resolved"`. Never bundle unrelated changes into this commit.
+  > Not run: no findings exist, so an audit fix would be unnecessary.
+- [x] Run the project's declared test command. Record the actual output (pass/fail with the error text — "should pass" is not a result).
+  > Not run: no tier-2 change was made to validate.
+- [x] If tests **fail**, or the boundary check above tripped: `git checkout -- <lockfile>` and record on the card that the auto-fix was attempted and reverted, with the failing output. This is a normal outcome, not an error — it converts those findings into `## HUMAN` tasks.
+  > Not applicable: no auto-fix was attempted and no boundary check could trip.
+- [x] If tests **pass**: re-run `npm audit --json` and record the residual finding counts. Commit the lockfile alone: `git add <lockfile> && git commit -m "fix(deps): npm audit fix — <N> advisories resolved"`. Never bundle unrelated changes into this commit.
+  > Not applicable: no fix ran; no commit was created.
 
 ---
 
 ### 5 · Verdict → findings card
 
-- [ ] Decide the verdict: **CLEAN / FIXED / NEEDS ATTENTION / N-A**.
+- [x] Decide the verdict: **CLEAN / FIXED / NEEDS ATTENTION / N-A**.
   - **CLEAN** — zero findings (or dev-only low/moderate accepted and recorded).
   - **FIXED** — everything resolved by tier 2, tests green, residual count zero.
   - **NEEDS ATTENTION** — any runtime `critical`/`high` remaining, any finding with no fix available, or any tier-3 item outstanding.
   - **N-A** — not an npm consumer (step 0).
   Runtime `critical`/`high` remaining is a **release blocker**; dev-only findings and warnings are not.
-  > NEEDS ATTENTION: the advisory feed was unavailable, so this is not a grounded publish-vulnerability clearance.
-- [ ] Mint (or refresh) the folder card `.flowdeck/.crunchdeck/security-findings/` — crunchdeck folder-card pattern: companion document + `TODO.md`. If it exists from a previous run, update in place; never clobber checked boxes or `## HUMAN` answers.
-  > Refreshed companion history and preserved the existing findings card; added the networked-audit handoff.
-- [ ] Write `VULN-AUDIT.md` — newest run on top, prior runs kept below as history (the trend matters: a moderate that has been open for four runs is a decision someone keeps deferring). Per run: date, scope + package manager (step 0), verdict, severity totals before/after, then per-advisory rows (id, severity, package, path, dev/runtime, fix status), the tier-2 outcome (applied / reverted / skipped + why), supply-chain warnings, and explicitly accepted risks with who accepted them.
-  > Added the 2026-09-07 network-blocked run above the retained prior history.
-- [ ] Write/reconcile `TODO.md` — every task cites its finding (`VULN-AUDIT.md § <section>`). Split by the tier boundary, which is also the judgment boundary: tier 2-eligible leftovers and mechanical lockfile work → `## BOT`; every tier-3 item → `## HUMAN`, each with the **exact command** and what it would break. On a refresh: add tasks for new advisories; mark tasks whose advisory no longer reproduces `[x]` with a `verified <date>` note. Skeleton:
+  > CLEAN: no findings before or after, no runtime dependencies, and no tier-3 items.
+- [x] Mint (or refresh) the folder card `.flowdeck/.crunchdeck/security-findings/` — crunchdeck folder-card pattern: companion document + `TODO.md`. If it exists from a previous run, update in place; never clobber checked boxes or `## HUMAN` answers.
+  > Refreshed the existing folder card’s audit history at `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md`.
+- [x] Write `VULN-AUDIT.md` — newest run on top, prior runs kept below as history (the trend matters: a moderate that has been open for four runs is a decision someone keeps deferring). Per run: date, scope + package manager (step 0), verdict, severity totals before/after, then per-advisory rows (id, severity, package, path, dev/runtime, fix status), the tier-2 outcome (applied / reverted / skipped + why), supply-chain warnings, and explicitly accepted risks with who accepted them.
+  > Added the 2026-09-07 CLEAN run first and retained the two earlier blocked runs as history.
+- [x] Write/reconcile `TODO.md` — every task cites its finding (`VULN-AUDIT.md § <section>`). Split by the tier boundary, which is also the judgment boundary: tier 2-eligible leftovers and mechanical lockfile work → `## BOT`; every tier-3 item → `## HUMAN`, each with the **exact command** and what it would break. On a refresh: add tasks for new advisories; mark tasks whose advisory no longer reproduces `[x]` with a `verified <date>` note. Skeleton:
   ```markdown
   ---
   lifecycle: one-shot
@@ -122,16 +132,18 @@ reset-on-play: true
 
   #### COMMENTS
   ```
-  > Added a HUMAN handoff for the networked JSON audit without overwriting existing card state.
-- [ ] Hand off by verdict: **NEEDS ATTENTION** → play `security-findings` to burn the tasks down, then replay this ritual to re-verify. **CLEAN / FIXED / N-A** → note the verdict and date on `.flowdeck/.crunchdeck/prepare-to-publish/TODO.md` if it exists, so `publish-readiness-audit § 8` can see the gate is satisfied.
-  > NEEDS ATTENTION handoff recorded in security-findings; prepare-to-publish does not exist.
-- [ ] Append a run record to `#### COMMENTS`: **date, verdict, severity totals, tier-2 outcome**, pointer to `security-findings/VULN-AUDIT.md`. `publish-readiness-audit` reads this line to decide whether the audit is fresh — keep the format stable. Reset the `## BOT` checkboxes for the next run (ritual semantics).
-  > Recorded this network-blocked run; remaining conditional audit/fix items stay open for replay.
+  > No new advisory creates a task; the existing findings `TODO.md` was left intact per the no-other-`TODO.md` read constraint.
+- [x] Hand off by verdict: **NEEDS ATTENTION** → play `security-findings` to burn the tasks down, then replay this ritual to re-verify. **CLEAN / FIXED / N-A** → note the verdict and date on `.flowdeck/.crunchdeck/prepare-to-publish/TODO.md` if it exists, so `publish-readiness-audit § 8` can see the gate is satisfied.
+  > CLEAN on 2026-09-07; no `prepare-to-publish` card exists to receive the freshness note.
+- [x] Append a run record to `#### COMMENTS`: **date, verdict, severity totals, tier-2 outcome**, pointer to `security-findings/VULN-AUDIT.md`. `publish-readiness-audit` reads this line to decide whether the audit is fresh — keep the format stable. Reset the `## BOT` checkboxes for the next run (ritual semantics).
+  > Recorded below; Flowdeck’s `reset-on-play` lifecycle will clear this completed ritual before its next execution.
 
 ## HUMAN
 
-- [ ] Reset and replay `publish-vuln-audit` now that `package-lock.json` exists, so `npm audit --json` can assess the resolved dependency tree reproducibly.
-- [ ] Run `npm audit --json` from an environment that can resolve `registry.npmjs.org`, then replay this ritual to obtain advisory totals and fix availability.
+- [x] Reset and replay `publish-vuln-audit` now that `package-lock.json` exists, so `npm audit --json` can assess the resolved dependency tree reproducibly.
+  > Resolved by this replay: the audit ran against `package-lock.json`.
+- [x] Run `npm audit --json` from an environment that can resolve `registry.npmjs.org`, then replay this ritual to obtain advisory totals and fix availability.
+  > Resolved by this replay: registry audit returned zero advisories.
 
 ## ACTIONS
 
@@ -151,13 +163,16 @@ reset-on-play: true
 > 2026-09-07 | Documentation check: README.md reviewed and needs no change; FLOWDECK.md now records the network-blocked audit as a known publish gap.
 > 2026-09-07 | NEEDS ATTENTION | critical: unavailable, high: unavailable, moderate: unavailable, low: unavailable, info: unavailable | tier-2: skipped (npm advisory endpoint DNS failure; node_modules absent) | `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md`
 > 2026-09-07 | Documentation check: README.md reviewed and needs no change; FLOWDECK.md retains the network-blocked npm audit as a known publish gap.
+> 2026-09-07 | CLEAN | critical: 0, high: 0, moderate: 0, low: 0, info: 0 | tier-2: skipped (no findings) | `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md`
+> 2026-09-07 | Documentation check: README.md and FLOWDECK.md reviewed; neither needs an update because the resolved audit is recorded in the findings history and no product behavior changed.
+> 2026-09-07 | `npm outdated` and `npm pack` initially hit root-owned default npm-cache files; isolated `mktemp` caches completed both checks without altering the project.
 
 ## OUTCOME
 
-This replay audited the tracked npm lockfile for `zoio@0.1.0` (npm v3 lockfile; no workspaces).
-The registry advisory endpoint could not resolve, so severity totals and advisory details remain unavailable; no tier-2 fix or test was run.
-The dry-run package contains only LICENSE, README.md, and package.json, with no bundled dependency tree; lockfile sources are registry-only.
-The refreshed findings history is at `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md`; replay from a networked environment before publishing.
+- Audited `zoio@0.1.0` with npm against `package-lock.json` v3; all advisory severity totals are zero.
+- Refreshed `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md` with the CLEAN run, retaining prior audit history.
+- Confirmed the unpublished dry-run tarball has 30 files and no bundled dependency tree; no automated fix or test run was needed.
+- Recorded two major-version development-tool updates as non-blocking context warnings.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-07 play(Casual): in=288082 out=10653 -->
+<!-- tokens 2026-09-07 play(Casual): in=350691 out=9658 -->
