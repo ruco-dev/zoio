@@ -1,9 +1,10 @@
 ---
 lifecycle: ritual
 recurrence: on-demand
-nick: Shark
+nick: Casual
 
 ---
+<!-- nick updated to Casual (was Shark) -->
 
 # publish-vuln-audit
 
@@ -157,4 +158,4 @@ nick: Shark
 - Created the findings report and human follow-up at `.flowdeck/.crunchdeck/security-findings/`.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-07 play(Shark): in=201592 out=7242 -->
+<!-- tokens 2026-09-07 play(Casual): in=66135 out=736 -->
