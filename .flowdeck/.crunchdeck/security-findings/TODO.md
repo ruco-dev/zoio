@@ -10,6 +10,8 @@ lifecycle: one-shot
 
 ## HUMAN
 
+- [ ] Run `npm audit --json` from an environment that can resolve `registry.npmjs.org`, then replay `publish-vuln-audit`; this blocks a reproducible advisory assessment but requires no manifest change. (VULN-AUDIT.md § 2026-09-07 — NEEDS ATTENTION)
+
 - [ ] Generate and commit a reproducible npm dependency tree with `npm install`, then replay `publish-vuln-audit`. This creates `package-lock.json`; without it, `npm audit --json` would audit newly resolved versions rather than what ships. (VULN-AUDIT.md § 2026-09-07 — NEEDS ATTENTION)
   > _answer:_
 
