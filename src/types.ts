@@ -1,6 +1,6 @@
 export type ScanMode = "fixture" | "codex" | "openai";
 
-export interface ZoioConfig { outputDir: string; mode: ScanMode; model?: string }
+export interface ZoioConfig { outputDir: string; mode: ScanMode; model?: string; codexTimeoutMs: number }
 export interface QueryRecord { id: string; runId: string; location: string; business: string; query: string; depth: number; parentId: string | null; provenance?: string }
 export interface SearchResult { text: string; prompt: string; raw: unknown; model?: string; provider: string; timestamp: string }
 export interface Entity { queryId: string; name: string; normalizedName: string; type: string; position: number; mentioned: boolean; recommended: boolean }

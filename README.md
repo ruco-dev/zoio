@@ -24,6 +24,9 @@ zoio scan Porto hotel --mode fixture --target "Example Hotel"
 # Default live path: uses the locally authenticated Codex CLI
 zoio scan Porto hotel --target "Hotel X"
 
+# Codex scans show a short progress message and default to a two-minute timeout
+zoio scan Porto hotel --timeout 180000
+
 # Explicit direct OpenAI scan; the key stays only in the environment
 OPENAI_API_KEY=... zoio scan Porto hotel --mode openai --model gpt-4.1-mini
 
@@ -37,7 +40,9 @@ zoio config
 zoio version
 ```
 
-`ZOIO_MODE`, `ZOIO_MODEL`, and `ZOIO_OUTPUT_DIR` configure defaults; command-line options take precedence. Valid modes are `fixture`, `codex` (the default), and `openai`.
+`ZOIO_MODE`, `ZOIO_MODEL`, `ZOIO_OUTPUT_DIR`, and `ZOIO_CODEX_TIMEOUT_MS` configure defaults; command-line options take precedence. Valid modes are `fixture`, `codex` (the default), and `openai`.
+
+Codex mode runs `codex exec --json`, which returns a JSON Lines event stream. Zoio retains the complete event sequence in `responses.jsonl` for provenance, analyzes the final assistant message, emits a non-sensitive in-flight progress message, and defaults to a 120,000ms timeout. Use `--timeout MS` or `ZOIO_CODEX_TIMEOUT_MS` to adjust it. Failed, malformed, or timed-out Codex calls stop before Zoio creates scan records.
 
 ## Local data and privacy
 
