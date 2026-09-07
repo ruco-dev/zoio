@@ -16,7 +16,8 @@ lifecycle: one-shot
 - [ ] Create the missing product profile and decide whether unscoped `zoio` or `@ruco-dev/zoio` is canonical; deprecate a twin only if one is later published. (AUDIT.md § 1)
 - [ ] Authenticate `gh` and verify `ruco-dev/zoio` exists with the intended visibility and canonical default branch. (AUDIT.md § 6)
 - [ ] Authorize review of the active cards' TODO contents to reconcile release commits, meld records, and publish conflicts. (AUDIT.md §§ 4–5)
+- [ ] Review and push the 20 local commits ahead of `origin/master` before publishing. (AUDIT.md § 3)
 
 #### COMMENTS
 
-> 2026-09-07: Initial NOT READY audit; package build/test and vulnerability gate pass, but release metadata and platform verification remain blocked.
+> 2026-09-07: Refreshed NOT READY audit; six tests pass and the vulnerability gate is current, but release metadata, active-card review, GitHub verification, and 20 unpushed commits remain blockers.
