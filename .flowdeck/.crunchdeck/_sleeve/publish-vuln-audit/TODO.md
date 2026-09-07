@@ -164,4 +164,4 @@ nick: Casual
 - A later check found `package-lock.json`; reset and replay this ritual to replace the stale blocker with a reproducible audit.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-07 play(Casual): in=186751 out=3699 -->
+<!-- tokens 2026-09-07 play(Casual): in=61190 out=965 -->
