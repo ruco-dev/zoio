@@ -2,3 +2,4 @@
 2026-09-07 create-mvp play(Glinder): in=598461 out=11322
 2026-09-07 codex-provider-streaming play(Glinder): in=107060 out=1399
 2026-09-07 codex-provider-streaming play(Glinder): in=253139 out=7706
+2026-09-07 .crunchdeck/_sleeve/publish-vuln-audit play(Shark): in=201592 out=7242
