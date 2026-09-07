@@ -137,6 +137,9 @@ nick: Casual
 
 ## HUMAN
 
+- [ ] Reset and replay `publish-vuln-audit` now that `package-lock.json` exists, so `npm audit --json` can assess the resolved dependency tree reproducibly.
+  > The 2026-09-07 NEEDS ATTENTION result is stale because its only blocker was the absent lockfile.
+
 ## ACTIONS
 
 <!-- Move any item to ## BOT (bot executes) or ## HUMAN (you handle it) to activate. -->
@@ -149,6 +152,8 @@ nick: Casual
 #### COMMENTS
 
 > 2026-09-07 | NEEDS ATTENTION | critical: unavailable, high: unavailable, moderate: unavailable, low: unavailable, info: unavailable | tier-2: skipped (no lockfile) | `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md`
+> 2026-09-07 | Documentation check: README.md and FLOWDECK.md reviewed; FLOWDECK.md now records the stale audit/replay gap, while README.md needs no change.
+> 2026-09-07 | Follow-up detected: package-lock.json is now present; preserve this run as history and replay the ritual to obtain reproducible severity totals.
 
 ## OUTCOME
 
@@ -156,6 +161,7 @@ nick: Casual
 - Recorded a NEEDS ATTENTION release blocker; no `npm audit` was run because its result would not be reproducible.
 - Verified the dry-run tarball has no bundled or vendored dependency tree.
 - Created the findings report and human follow-up at `.flowdeck/.crunchdeck/security-findings/`.
+- A later check found `package-lock.json`; reset and replay this ritual to replace the stale blocker with a reproducible audit.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-07 play(Casual): in=68597 out=750 -->
+<!-- tokens 2026-09-07 play(Casual): in=186751 out=3699 -->
