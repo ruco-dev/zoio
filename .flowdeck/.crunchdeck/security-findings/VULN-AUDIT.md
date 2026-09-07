@@ -7,9 +7,9 @@
 - **Severity totals:** critical: 0; high: 0; moderate: 0; low: 0; info: 0.
 - **Findings:** none. The package declares no runtime dependencies, so no consumer-shipping dependency or dead-runtime-dependency review is required.
 - **Outdated context (warning only):** `@types/node` 22.20.1 → 26.5.0 and `typescript` 5.9.3 → 7.0.2 are major upgrades; `tsx` is current within its declared range.
-- **Published artifact:** `npm pack --dry-run --json` reports 30 files (49,015 bytes unpacked), no bundled dependencies, no `node_modules/`, and no vendor tree. `npm view zoio versions` returned 404, so no published-consumer audit applies.
+- **Published artifact:** the initial clean `git archive HEAD` source packed only `LICENSE`, `README.md`, and `package.json`, exposing that ignored local `dist/` had made the earlier host result non-reproducible. **Resolved 2026-09-07:** added `prepack: npm run build`; a clean archived source with the locked toolchain installed now builds and packs 30 files, including the declared `dist/cli.js` binary (49,047 bytes unpacked), with no bundled dependency tree. `npm view zoio versions` returned 404, so no published-consumer audit applies.
 - **Supply-chain signals:** all lockfile resolutions are npm-registry tarballs; `esbuild` and optional `fsevents` have install scripts, unchanged from the prior successful baseline. The direct development dependencies have no deprecation notice and recently updated registry metadata. No dedicated scanner is configured.
-- **Tier 2:** skipped — there were no findings to fix; `npm audit fix` and the test command were not run, and no files changed.
+- **Tier 2:** no dependency fix was needed. The publish-surface correction changed `package.json`; the full declared test command passed (6/6), the clean-source pack passed, and a follow-up `npm audit --json` remained at zero advisories.
 - **Accepted risks:** none.
 
 ## 2026-09-07 — CLEAN

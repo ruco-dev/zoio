@@ -3,8 +3,7 @@ lifecycle: ritual
 recurrence: on-demand
 nick: Casual
 reset-on-play: true
-
-
+network: required
 ---
 <!-- nick updated to Casual (was Shark) -->
 
@@ -13,6 +12,13 @@ reset-on-play: true
 > **Codex-safe temporary files:** Never run `rm`, `rm -f`, or `rm -rf`.
 > Leave `mktemp` directories for operating-system cleanup. Run npm checks as
 > separate commands rather than one nested, heavily quoted shell command.
+>
+> **Codex execution contract:** `network: required` declares the need; the
+> project owner separately authorizes it through
+> `providers.codex.networkAccess: true` in `.flowdeck/config.json`. Treat an
+> isolated checkout as publish truth. Verify it explicitly with a disposable
+> `git archive HEAD` source tree: ignored caller-only `dist/` and `node_modules/`
+> are not evidence unless the package lifecycle recreates them.
 
 > **Sleeve resident.** Ritual card: it lives in the deck's own `_sleeve/` (`.flowdeck/.crunchdeck/_sleeve/`), is played in place, and is never melded. Play it before `publish-readiness-audit` (which gates on its freshness), or whenever "are we shipping known-vulnerable dependencies?" needs a grounded answer.
 >
@@ -66,7 +72,7 @@ reset-on-play: true
 - [x] The declared tree is what *we* install; the tarball is what *consumers* install. Verify the shipped artifact separately — a `bundledDependencies` entry or a vendored `dist/` can carry a vulnerable copy that `npm audit` over the working tree never sees:
   - `npm pack --dry-run` and read the file list for vendored/bundled dependency trees (`node_modules/` inside the tarball, checked-in `vendor/`, bundled browser builds).
   - If the package is already published, audit what is live: `npm view <name> versions` for the current version, then install it into a scratch dir (`mktemp -d`) and run `npm audit --json` there. This is the number a consumer sees and is the only one that reflects *transitive* drift since the last publish.
-  > Dry run has 30 files and no bundled/vendor tree; `zoio` is unpublished (npm view returned 404), so no live audit applies.
+  > The initial clean `git archive HEAD` source exposed missing `dist/`; after adding `prepack: npm run build`, the clean-source dry run has all 30 expected files including `dist/cli.js`, with no bundled/vendor tree. `zoio` is unpublished (npm view returned 404), so no live audit applies.
 - [x] Cross-check `dependencies` for anything the code no longer imports (a dead runtime dep is pure attack surface with zero benefit) — grep the entry points for each declared runtime dep. Record removals as `## HUMAN` (removing a dep is a `package.json` edit: tier 3).
   > No runtime dependencies are declared; no dead runtime dependency can be removed.
 
@@ -172,7 +178,7 @@ reset-on-play: true
 ## OUTCOME
 
 - Audited `zoio@0.1.0` with npm against the tracked v3 lockfile; all severity totals are zero.
-- Confirmed the dry-run tarball has 30 files and no bundled or vendored dependency tree; no published version exists to audit.
+- Confirmed there is no bundled or vendored dependency tree and no published version to audit; a clean-source check exposed missing `dist/`, then verified `prepack` resolves it reproducibly.
 - Recorded the newest CLEAN run in `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md` while retaining prior run history.
 - No auto-fix, test run, package manifest change, or commit was required.
 
