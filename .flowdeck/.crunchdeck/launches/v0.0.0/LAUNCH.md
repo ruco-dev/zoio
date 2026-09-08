@@ -60,7 +60,7 @@
 | Fresh vulnerability audit is CLEAN/FIXED | TBD — repository maintainer | Awaiting evidence |
 | Publish-readiness audit is READY | TBD — repository maintainer | Awaiting evidence |
 | Build, lint, test, and clean-install checks pass | TBD — repository maintainer | Awaiting evidence |
-| All checklist sections green | TBD — repository maintainer | **Awaiting human decision — Go / No-Go** |
+| All checklist sections green | TBD — repository maintainer | **Human decision — Go** |
 
 ## Kill / Rollback Criteria
 

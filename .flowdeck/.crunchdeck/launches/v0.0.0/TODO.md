@@ -27,9 +27,7 @@ network: required
 
 ## HUMAN
 
-- [ ] Choose **Go** or **No-Go** in `LAUNCH.md` after reviewing fresh gate and
-  validation evidence. A Go decision authorizes activation of the dormant
-  `publish` action below; a No-Go keeps publication blocked.
+- [x] Choose **Go** or **No-Go** in `LAUNCH.md` after reviewing fresh gate and validation evidence. A Go decision authorizes activation of the dormant `publish` action below; a No-Go keeps publication blocked.
 
 #### COMMENTS
 
