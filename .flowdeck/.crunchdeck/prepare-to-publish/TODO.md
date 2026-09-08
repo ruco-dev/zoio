@@ -23,16 +23,16 @@ nick: Casual
 >_answer_: zoio
 
 - [ ] Authenticate `gh` and verify `ruco-dev/zoio` exists with the intended visibility and canonical default branch. (AUDIT.md § 6)
->_answer_: 
+>_kemps:_ Authenticate `gh`, then confirm `ruco-dev/zoio` is the intended public repository with `master` as its default branch and that its URL matches the `repository` metadata.
 
 - [x] Authorize review of the active cards' TODO contents to reconcile release commits, meld records, and publish conflicts. (AUDIT.md §§ 4–5)
 >_answer_: 
 
 - [ ] Resolve the card-instruction conflict: authorize reading the named active cards' `TODO.md` files despite this card's prohibition, so the release-note reconciliation can finish.
->_answer_: 
+>_kemps:_ Authorize a read-only review of the named active cards’ `TODO.md` files solely to reconcile `CHANGELOG.md`, meld records, and any publish conflicts; do not alter those cards during the review.
 
 - [ ] Review and push the 20 local commits ahead of `origin/master` before publishing. (AUDIT.md § 3)
->_answer_: 
+>_kemps:_ Review and push the one currently unpushed commit ahead of `origin/master` before publishing; the “20” count is stale according to the latest audit comment.
 
 #### COMMENTS
 
@@ -45,4 +45,4 @@ nick: Casual
 > 2026-09-08: `origin/master..HEAD` now has one commit (not 20); `npm run check`, `npm run format:check`, and `npm test` pass with six tests. README.md and FLOWDECK.md were reviewed and need no further update.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-08 play(Casual): in=176194 out=3236 -->
+<!-- tokens 2026-09-08 kemps(Casual): in=85396 out=1518 -->
