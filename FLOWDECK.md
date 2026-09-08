@@ -11,10 +11,11 @@ Zoio is a local-first CLI that shows which businesses and entities appear in AI-
 - TypeScript npm CLI with `scan`, `explore`, `batch`, `config`, and `version` commands.
 - Local JSONL scan persistence, deterministic fixture mode, a JSONL-aware Codex CLI mode with bounded timeout/progress, and optional direct OpenAI mode.
 - Entity/citation extraction, target visibility matching, bounded exploration, and offline test coverage.
+- Fresh-clone CI runs type checks, formatting checks, and the source test suite; npm packaging excludes compiled test artifacts.
 
 ## Known gaps
 
 <!-- Open known issues or missing pieces. Update this after each meld. -->
 
 - Live Codex and OpenAI scans require their respective local credentials; the offline suite uses a fake Codex executable for adapter coverage.
-- Publish readiness remains blocked by missing release notes and repository metadata/verification; the current audit is tracked in `.flowdeck/.crunchdeck/prepare-to-publish/`.
+- Publish readiness remains blocked by GitHub repository verification and authorized reconciliation of initial release notes with active cards and meld history; the current audit is tracked in `.flowdeck/.crunchdeck/prepare-to-publish/`.

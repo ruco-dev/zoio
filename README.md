@@ -15,6 +15,8 @@ node dist/cli.js scan Porto hotel --mode fixture
 
 For a global install after publishing, use `npm install -g zoio`, then run `zoio scan Porto hotel`.
 
+Release notes are maintained in [CHANGELOG.md](CHANGELOG.md).
+
 ## Commands
 
 ```bash
