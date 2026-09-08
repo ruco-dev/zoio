@@ -19,4 +19,6 @@ All notable changes to Zoio are documented in this file.
 
 ### Notes
 
-- Final reconciliation of this initial release with active-card and meld history awaits authorized card review.
+- Reconciled against the completed `create-mvp` and `codex-provider-streaming` delivery cards: these entries cover the CLI, providers, persistence, analysis, exploration, batch execution, and Codex JSONL handling shipped for 0.1.0.
+- The only meld record is the `start` onboarding card, which contains no consumer-facing release change.
+- Publication remains pending the human MVP-scope review tracked on `create-mvp` and repository verification; neither changes the implemented 0.1.0 feature list above.
