@@ -1,6 +1,8 @@
 ---
 lifecycle: one-shot
+nick: Casual
 ---
+<!-- nick updated to Casual (was none) -->
 
 # prepare-to-publish
 
