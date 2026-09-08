@@ -22,7 +22,7 @@ nick: Casual
 - [x] Create the missing product profile and decide whether unscoped `zoio` or `@ruco-dev/zoio` is canonical; deprecate a twin only if one is later published. (AUDIT.md § 1)
 >_answer_: zoio
 
-- [ ] Authenticate `gh` and verify `ruco-dev/zoio` exists with the intended visibility and canonical default branch. (AUDIT.md § 6)
+- [x] Authenticate `gh` and verify `ruco-dev/zoio` exists with the intended visibility and canonical default branch. (AUDIT.md § 6)
 >_kemps:_ Authenticate `gh`, then confirm `ruco-dev/zoio` is the intended public repository with `master` as its default branch and that its URL matches the `repository` metadata.
 
 - [x] Authorize review of the active cards' TODO contents to reconcile release commits, meld records, and publish conflicts. (AUDIT.md §§ 4–5)
