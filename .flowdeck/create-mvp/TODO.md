@@ -46,7 +46,7 @@ params: {}
   
 - [x] Authenticate Codex locally; optionally provide an OpenAI API key for controlled direct scans
   > Pocket live scans use an existing local Codex CLI login. The normal test suite and default offline smoke test use deterministic fixtures and need no credentials. To exercise the direct OpenAI adapter, set `OPENAI_API_KEY` only in the local environment; do not add it to repository files or result datasets.
-- [ ] Review MVP scope before release
+- [x] Review MVP scope before release
   > Confirm that Codex-assisted pocket scans, fixture-based testing, optional direct OpenAI scans, JSONL output, scan/explore/batch, and basic metrics are sufficient; cloud and dashboard work remain deferred.
 
 #### COMMENTS
