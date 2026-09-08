@@ -86,6 +86,8 @@ from `npm install -g zoio` in minutes, not hours.
 
 ## Gate Evidence
 
+- 2026-09-08 vulnerability audit: `npm audit --json` completed with critical: 0, high: 0, moderate: 0, low: 0, info: 0 (CLEAN). `package-lock.json` and `security-findings/VULN-AUDIT.md` both have mtime `2026-09-08T13:50:33Z`.
+- 2026-09-08 readiness replay: NOT READY. The recorded release-history, GitHub verification, active-card review, and push blockers remain unresolved; additionally, this checkout has no local `tsc`, so `npm pack --dry-run` cannot complete its `prepack` build (exit 127). `package-lock.json` and `prepare-to-publish/AUDIT.md` both have mtime `2026-09-08T13:50:33Z`.
 - 2026-09-08 first-release check: npm registry reports `zoio` is unpublished (404); `git tag --list`, `git ls-remote --tags --refs origin`, and the GitHub Releases API returned no releases or tags.
 - 2026-09-08 vulnerability-audit freshness: the newest `VULN-AUDIT.md` entry is CLEAN (2026-09-07, zero advisories), and its report mtime matches `package-lock.json` (2026-09-08T13:17:46Z).
 - 2026-09-08 publish-readiness freshness: the newest `AUDIT.md` entry is NOT READY (2026-09-07); its report mtime also matches `package-lock.json`, but it blocks progression pending CHANGELOG/release reconciliation, GitHub verification, active-card review, and pushing local release work.

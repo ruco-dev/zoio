@@ -1,7 +1,9 @@
 ---
 lifecycle: one-shot
 network: required
+nick: Shark
 ---
+<!-- nick updated to Shark (was none) -->
 
 # Launch Zoio v0.0.0
 
@@ -22,6 +24,7 @@ network: required
 - [ ] Run the `publish-vuln-audit` ritual, then the `publish-readiness-audit`
   ritual. Record each verdict and freshness evidence in `LAUNCH.md`; stop if
   either verdict is not CLEAN/FIXED or READY, respectively.
+  > 2026-09-08: `npm audit --json` returned zero advisories (CLEAN); readiness remains NOT READY because its recorded human blockers persist and this checkout lacks `tsc`, so the required `npm pack --dry-run` build smoke exits 127.
 - [ ] Run `npm run build`, `npm run lint`, and `npm test`; record the commands,
   outcomes, and timestamps in `LAUNCH.md`. Do not proceed on a failure.
 - [ ] Verify a clean-environment install and the documented fixture quickstart;
@@ -35,6 +38,8 @@ network: required
 #### COMMENTS
 
 - The readiness report is fresh relative to `package-lock.json` but explicitly NOT READY; per the launch gate, build/lint/test and clean-install validation were not run.
+- The 2026-09-08 audit command is CLEAN (0 advisories); `package-lock.json`, `VULN-AUDIT.md`, and `AUDIT.md` have matching 2026-09-08T13:50:33Z mtimes, but a new READY report cannot be produced until the readiness blockers and missing local build toolchain are resolved.
+- Mandatory doc check: reviewed `README.md` and `FLOWDECK.md`; neither describes a completed release, so no documentation update is appropriate while this launch remains blocked.
 
 ## ACTIONS
 
@@ -45,4 +50,4 @@ network: required
   then update `LAUNCH.md` with evidence.
 
 <!-- next: Shark -->
-<!-- tokens 2026-09-08 play(Glinder): in=184848 out=3888 -->
+<!-- tokens 2026-09-08 play(Shark): in=180176 out=3350 -->
