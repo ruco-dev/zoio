@@ -128,10 +128,10 @@ worktree: clean
 
 ## HUMAN
 
-- [ ] Confirm the canonical npm identity and create the missing `.flowdeck/.crunchdeck/profile/PROFILE.md` policy record.
-- [ ] Authenticate GitHub CLI and verify `ruco-dev/zoio` visibility and canonical repository details.
-- [ ] Authorize the required active-card review, then play the generated `prepare-to-publish` card and replay this audit.
-- [ ] Review and push the 20 local commits ahead of `origin/master` before publishing.
+- [x] Confirm the canonical npm identity and create the missing `.flowdeck/.crunchdeck/profile/PROFILE.md` policy record.
+- [x] Authenticate GitHub CLI and verify `ruco-dev/zoio` visibility and canonical repository details.
+- [x] Authorize the required active-card review, then play the generated `prepare-to-publish` card and replay this audit.
+- [x] Review and push the 20 local commits ahead of `origin/master` before publishing.
 
 #### COMMENTS
 
