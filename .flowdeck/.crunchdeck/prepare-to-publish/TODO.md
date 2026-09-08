@@ -48,6 +48,8 @@ nick: Casual
 
 > 2026-09-08: Authorized active-card review reconciled 0.1.0 to `create-mvp` and `codex-provider-streaming`; the `start` meld is onboarding-only. README.md was checked without changes; FLOWDECK.md now records that reconciliation, while `create-mvp` retains one human MVP-scope gate.
 
+> 2026-09-08: Replayed card: README.md and FLOWDECK.md still need no update; validation could not run because this checkout lacks `tsc`, and GitHub verification could not reach api.github.com.
+
 ## OUTCOME
 
 Added and reconciled the initial `CHANGELOG.md` at `/Users/ruco/ruco-dev/pills-incubator/zoio/CHANGELOG.md`.
@@ -56,4 +58,4 @@ The 0.1.0 notes now trace to the completed MVP and Codex-streaming delivery card
 README.md needed no change; FLOWDECK.md now records the completed reconciliation and remaining human MVP-scope/repository gates.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-08 play(Casual): in=238525 out=4056 -->
+<!-- tokens 2026-09-08 play(Casual): in=139305 out=2372 -->
