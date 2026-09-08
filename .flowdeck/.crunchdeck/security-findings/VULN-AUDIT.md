@@ -1,5 +1,17 @@
 # Vulnerability audit history
 
+## 2026-09-08 — CLEAN
+
+- **Scope:** root npm package `zoio@0.1.0`; npm (`package-lock.json` v3); no workspaces; test command: `npm run build && node --import tsx --test src/**/*.test.ts`.
+- **Audit status:** `npm audit --json` completed against the tracked, unmodified resolved lockfile with no advisories.
+- **Severity totals (before/after):** critical: 0/0; high: 0/0; moderate: 0/0; low: 0/0; info: 0/0.
+- **Findings:** none. There are no runtime dependencies; the three declared dependencies are development-only, so no consumer-shipping or dead-runtime dependency review applies.
+- **Outdated context (warning only):** `@types/node` 22.20.1 → 26.5.0 and `typescript` 5.9.3 → 7.0.2 are major upgrades; `tsx` remains current within its declared range.
+- **Published artifact:** `npm pack --dry-run --json` ran `prepack` successfully and reports 27 files (41,692 bytes unpacked), including `dist/cli.js`; no `node_modules/`, vendor tree, or bundled dependencies. `npm view zoio versions --json` returned 404, so no published-consumer audit applies.
+- **Supply-chain signals:** every lockfile resolution is an npm-registry tarball; `esbuild` and optional `fsevents` have install scripts and no observed change from the previous clean baseline. Direct dependency metadata returned no deprecation notice; no dedicated scanner is configured.
+- **Tier 2:** skipped — no findings to fix, so no `npm audit fix` or test run was warranted and no project files changed.
+- **Accepted risks:** none.
+
 ## 2026-09-07 — CLEAN
 
 - **Scope:** root npm package `zoio@0.1.0`; npm (`package-lock.json` v3); no workspaces; test command: `npm run build && node --test dist/**/*.test.js`.
