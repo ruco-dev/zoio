@@ -45,4 +45,4 @@ nick: Casual
 > 2026-09-08: `origin/master..HEAD` now has one commit (not 20); `npm run check`, `npm run format:check`, and `npm test` pass with six tests. README.md and FLOWDECK.md were reviewed and need no further update.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-08 kemps(Casual): in=85396 out=1518 -->
+<!-- tokens 2026-09-08 kemps(Casual): in=18525 out=66 -->
