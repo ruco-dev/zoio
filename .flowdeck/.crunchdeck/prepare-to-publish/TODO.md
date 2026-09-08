@@ -17,9 +17,13 @@ lifecycle: one-shot
 
 ## HUMAN
 
-- [ ] Create the missing product profile and decide whether unscoped `zoio` or `@ruco-dev/zoio` is canonical; deprecate a twin only if one is later published. (AUDIT.md § 1)
+- [x] Create the missing product profile and decide whether unscoped `zoio` or `@ruco-dev/zoio` is canonical; deprecate a twin only if one is later published. (AUDIT.md § 1)
+>_answer_: zoio
+
 - [ ] Authenticate `gh` and verify `ruco-dev/zoio` exists with the intended visibility and canonical default branch. (AUDIT.md § 6)
-- [ ] Authorize review of the active cards' TODO contents to reconcile release commits, meld records, and publish conflicts. (AUDIT.md §§ 4–5)
+
+- [x] Authorize review of the active cards' TODO contents to reconcile release commits, meld records, and publish conflicts. (AUDIT.md §§ 4–5)
+
 - [ ] Review and push the 20 local commits ahead of `origin/master` before publishing. (AUDIT.md § 3)
 
 #### COMMENTS
