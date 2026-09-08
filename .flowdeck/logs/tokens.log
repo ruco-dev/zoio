@@ -16,3 +16,4 @@
 2026-09-07 .crunchdeck/_sleeve/publish-readiness-audit play(Shark): in=406036 out=12984
 2026-09-07 .crunchdeck/_sleeve/publish-readiness-audit play(Casual): in=406541 out=11266
 2026-09-08 .crunchdeck/prepare-to-publish play(Glinder): in=283175 out=5125
+2026-09-08 .crunchdeck/_sleeve/crunchdeck-init play(Glinder): in=509988 out=16439

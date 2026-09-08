@@ -9,9 +9,11 @@ recurrence: on-demand
 
 ## BOT
 
-- [ ] Read `FLOWDECK.md` for product name and description. Fall back to `package.json` name/description if not found.
+- [x] Read `FLOWDECK.md` for product name and description. Fall back to `package.json` name/description if not found.
+  > Identified Zoio as the local-first AI search visibility scanner.
 
-- [ ] **Migrate for the rename campaigns** — apply whichever renames are applicable. For each pair below, if the old path exists and the new one does not, rename it with `git mv <old> <new>` (plain `mv` if untracked). If **both** exist, do not merge — surface the conflict under `## HUMAN` and leave both untouched. If only the new name exists (or neither), skip silently — replay stays idempotent:
+- [x] **Migrate for the rename campaigns** — apply whichever renames are applicable. For each pair below, if the old path exists and the new one does not, rename it with `git mv <old> <new>` (plain `mv` if untracked). If **both** exist, do not merge — surface the conflict under `## HUMAN` and leave both untouched. If only the new name exists (or neither), skip silently — replay stays idempotent:
+  > No applicable legacy paths or path conflicts were present.
   - **ADR-0005/06 reversal** (instrument folders — `_`-prefix → plain, crunchdeck 0.9.0):
     - `.flowdeck/.crunchdeck/crunchdeck-inbox/` → `.flowdeck/.crunchdeck/crunchdeck-inbox/`
     - `.flowdeck/.crunchdeck/profile/` → `.flowdeck/.crunchdeck/profile/`
@@ -24,7 +26,8 @@ recurrence: on-demand
   - `.flowdeck/_sleeve/crunchdeck-init/` → `.flowdeck/.crunchdeck/_sleeve/crunchdeck-init/` (sleeve cards moved from the board's root `_sleeve/` into each deck's own — `flowdeck update crunchdeck` also performs this relocation itself)
   After any move, update literal old-path references inside the migrated instance's own files (instrument `TODO.md`s, config/index docs) to match the target paths; the instance's `AGENT.md` copies are refreshed from the deck package by `flowdeck update crunchdeck` itself.
 
-- [ ] This ritual is idempotent — do not stop early if `.flowdeck/.crunchdeck/` already exists. For each path below, create it only if missing; skip silently if it already exists:
+- [x] This ritual is idempotent — do not stop early if `.flowdeck/.crunchdeck/` already exists. For each path below, create it only if missing; skip silently if it already exists:
+  > Created the missing operational, decision, and launch directories.
   - `.flowdeck/.crunchdeck/`
   - `.flowdeck/.crunchdeck/crunchdeck-inbox/`
   - `.flowdeck/.crunchdeck/profile/`
@@ -34,9 +37,11 @@ recurrence: on-demand
   - `.flowdeck/.crunchdeck/_decisions/`
   - `.flowdeck/.crunchdeck/launches/`
 
-- [ ] Add `.*` to `.flowdeck/.flowdeckignore` if not already present, so `.crunchdeck/` is excluded from `flowdeck turn`.
+- [x] Add `.*` to `.flowdeck/.flowdeckignore` if not already present, so `.crunchdeck/` is excluded from `flowdeck turn`.
+  > Added the dot-directory ignore rule.
 
-- [ ] Scaffold the six **instrument cards** — one per operational folder, each played in place (never melded). Per the folder-is-card rule (sleeve `SPEC.md`) these are *not* `_sleeve/` residents and *not* blueprints: they live on the `.crunchdeck/` folder they act on, carry `lifecycle: recurring` frontmatter (so playing one resets its `## BOT` checkboxes for the next run), and are excluded from `turn` sweeps via the `.*` ignore rule above. Play one with `flowdeck play .crunchdeck/<area>` or in place. Write each file **only if it does not already exist** (never clobber local tuning):
+- [x] Scaffold the six **instrument cards** — one per operational folder, each played in place (never melded). Per the folder-is-card rule (sleeve `SPEC.md`) these are *not* `_sleeve/` residents and *not* blueprints: they live on the `.crunchdeck/` folder they act on, carry `lifecycle: recurring` frontmatter (so playing one resets its `## BOT` checkboxes for the next run), and are excluded from `turn` sweeps via the `.*` ignore rule above. Play one with `flowdeck play .crunchdeck/<area>` or in place. Write each file **only if it does not already exist** (never clobber local tuning):
+  > Created the missing inbox, profile, backlog, roadmap, stats, and launches folder cards.
 
   - `.flowdeck/.crunchdeck/crunchdeck-inbox/TODO.md`:
     ```markdown
@@ -211,21 +216,29 @@ recurrence: on-demand
     #### COMMENTS
     ```
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/AGENT.md` if it does not already exist — copy verbatim from `_energy-cards/crunchdeck-AGENT.md`.
+- [x] Scaffold `.flowdeck/.crunchdeck/AGENT.md` if it does not already exist — copy verbatim from `_energy-cards/crunchdeck-AGENT.md`.
+  > Copied the energy-card guidance verbatim and verified it matches the template.
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/README.md` from `_energy-cards/README.md.template`, substituting `{{PRODUCT_NAME}}` and `{{DATE}}` (today). Repair-safe: create it if missing; if it exists, regenerate it from the current template and refresh the stamp — unless a `.flowdeck/.crunchdeck/.readme-hash` stamp already exists and no longer matches the file's current content (real evidence of a hand-edit since the last generation; a *missing* stamp is not such evidence and must not block regeneration). In that hand-edited case, leave it alone and note under `## HUMAN` that it's locally customized and may be out of sync. Write/refresh `.flowdeck/.crunchdeck/.readme-hash` (sha256 of the file) after writing or confirming it.
+- [x] Scaffold `.flowdeck/.crunchdeck/README.md` from `_energy-cards/README.md.template`, substituting `{{PRODUCT_NAME}}` and `{{DATE}}` (today). Repair-safe: create it if missing; if it exists, regenerate it from the current template and refresh the stamp — unless a `.flowdeck/.crunchdeck/.readme-hash` stamp already exists and no longer matches the file's current content (real evidence of a hand-edit since the last generation; a *missing* stamp is not such evidence and must not block regeneration). In that hand-edited case, leave it alone and note under `## HUMAN` that it's locally customized and may be out of sync. Write/refresh `.flowdeck/.crunchdeck/.readme-hash` (sha256 of the file) after writing or confirming it.
+  > Created the README and SHA-256 stamp (4fb0fa1ed19f2be449c6f980e1ccfe6e9093755263425d01af6e831779365027).
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/profile/PROFILE.md` from `_energy-cards/PROFILE.md.template` — substitute `{{PRODUCT_NAME}}`, `{{DATE}}`, and `{{PROMPT}}` from context.
+- [x] Scaffold `.flowdeck/.crunchdeck/profile/PROFILE.md` from `_energy-cards/PROFILE.md.template` — substitute `{{PRODUCT_NAME}}`, `{{DATE}}`, and `{{PROMPT}}` from context.
+  > Created Zoio's product profile with local-first positioning and a north-star metric.
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/backlog/BACKLOG.md` from `_energy-cards/BACKLOG.md.template` — substitute `{{PRODUCT_NAME}}` and `{{DATE}}`.
+- [x] Scaffold `.flowdeck/.crunchdeck/backlog/BACKLOG.md` from `_energy-cards/BACKLOG.md.template` — substitute `{{PRODUCT_NAME}}` and `{{DATE}}`.
+  > Created the initial strategic backlog and deferred hosted-dashboard scope.
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/roadmap/ROADMAP.md` from `_energy-cards/ROADMAP.md.template` — substitute `{{PRODUCT_NAME}}`, `{{DATE}}`, and `{{OWNER}}` from `git config user.name`.
+- [x] Scaffold `.flowdeck/.crunchdeck/roadmap/ROADMAP.md` from `_energy-cards/ROADMAP.md.template` — substitute `{{PRODUCT_NAME}}`, `{{DATE}}`, and `{{OWNER}}` from `git config user.name`.
+  > Created the Now/Next/Later roadmap; Git user name is unset and recorded as TBD.
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/stats/STATS.md` from `_energy-cards/STATS.md.template` — substitute `{{PRODUCT_NAME}}` and `{{DATE}}`.
+- [x] Scaffold `.flowdeck/.crunchdeck/stats/STATS.md` from `_energy-cards/STATS.md.template` — substitute `{{PRODUCT_NAME}}` and `{{DATE}}`.
+  > Created the Zoio package stats baseline with metrics pending its first poll.
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/_decisions/ADR-0001/ADR-0001.md` from `_energy-cards/ADR.md.template` — number `ADR-0001`, title "Initial Technology Stack", Status `Accepted`. Fill Context/Decision/Rationale with plausible initial choices derived from `package.json` and `PROFILE.md` (language, runtime, key dependencies). Use `{{AUTHOR}}` from `git config user.name` and `{{DATE}}` as today.
+- [x] Scaffold `.flowdeck/.crunchdeck/_decisions/ADR-0001/ADR-0001.md` from `_energy-cards/ADR.md.template` — number `ADR-0001`, title "Initial Technology Stack", Status `Accepted`. Fill Context/Decision/Rationale with plausible initial choices derived from `package.json` and `PROFILE.md` (language, runtime, key dependencies). Use `{{AUTHOR}}` from `git config user.name` and `{{DATE}}` as today.
+  > Recorded the Node.js/TypeScript, JSONL, and provider-adapter architecture decision.
 
-- [ ] Create `.flowdeck/.crunchdeck/_decisions/ADR-0001/TODO.md`:
+- [x] Create `.flowdeck/.crunchdeck/_decisions/ADR-0001/TODO.md`:
+  > Created the ADR review folder card.
   ```
   ---
   lifecycle: one-shot
@@ -243,9 +256,11 @@ recurrence: on-demand
   #### COMMENTS
   ```
 
-- [ ] Scaffold `.flowdeck/.crunchdeck/launches/v0.0.0/LAUNCH.md` from `_energy-cards/LAUNCH.md.template` — version `v0.0.0`, title "Pre-launch Baseline", Status `Archived`. Fill as a seed/bootstrap state: all checklist items marked with a note that this is the starting baseline, not a real release. Use `{{DATE}}` as today and `{{OWNER}}` from `git config user.name`.
+- [x] Scaffold `.flowdeck/.crunchdeck/launches/v0.0.0/LAUNCH.md` from `_energy-cards/LAUNCH.md.template` — version `v0.0.0`, title "Pre-launch Baseline", Status `Archived`. Fill as a seed/bootstrap state: all checklist items marked with a note that this is the starting baseline, not a real release. Use `{{DATE}}` as today and `{{OWNER}}` from `git config user.name`.
+  > Created the archived v0.0.0 bootstrap launch baseline.
 
-- [ ] Create `.flowdeck/.crunchdeck/launches/v0.0.0/TODO.md`:
+- [x] Create `.flowdeck/.crunchdeck/launches/v0.0.0/TODO.md`:
+  > Created the one-shot launch-baseline review card and dormant action menu.
   ```
   ---
   lifecycle: one-shot
@@ -278,4 +293,12 @@ recurrence: on-demand
 
 ## HUMAN
 
+- [ ] Commit the validated crunchdeck scaffold when Flowdeck owns the commit.
+
 #### COMMENTS
+
+- README.md and FLOWDECK.md were reviewed; no product documentation change was needed because this run only added the internal crunchdeck scaffold.
+- Git user.name is unset, so generated owner/author fields are explicitly marked TBD.
+
+<!-- next: Casual -->
+<!-- tokens 2026-09-08 play(Glinder): in=509988 out=16439 -->
