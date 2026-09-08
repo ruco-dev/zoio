@@ -1,8 +1,8 @@
 # Launch: Zoio v0.0.0
 
-**Package:** `zoio` (unscoped)
+**Package:** `zoio` (unscoped; local version `0.1.0`)
 **Target date:** TBD — set after launch gates are green
-**Owner:** TBD — repository maintainer
+**Owner:** ruco-dev repository maintainer
 **Status:** Preparing first release
 
 ---
@@ -14,11 +14,15 @@
 > locally and stores portable JSONL evidence without an account, backend, or
 > dashboard.
 
+**North-star signal:** a developer reaches a saved, structured visibility dataset
+from `npm install -g zoio` in minutes, not hours.
+
 ---
 
 ## Product
 
-- [ ] First-release status verified: no applicable npm publication, git tag, or non-baseline release exists
+- [x] First-release status verified: no applicable npm publication, git tag, or non-baseline release exists
+  > 2026-09-08: `npm view zoio versions --json` returned registry 404; local and remote tag lists and GitHub Releases API were empty.
 - [ ] Published to npm as `zoio` at the approved version
 - [ ] Version tag and CHANGELOG entry created for the approved release
 - [ ] Clean-environment install and documented fixture quickstart verified
@@ -58,7 +62,7 @@
 | Gate | Owner | Decision |
 |---|---|---|
 | Fresh vulnerability audit is CLEAN/FIXED | TBD — repository maintainer | Awaiting evidence |
-| Publish-readiness audit is READY | TBD — repository maintainer | Awaiting evidence |
+| Publish-readiness audit is READY | ruco-dev repository maintainer | **Blocked — 2026-09-07 NOT READY audit is current but requires remediation** |
 | Build, lint, test, and clean-install checks pass | TBD — repository maintainer | Awaiting evidence |
 | All checklist sections green | TBD — repository maintainer | **Human decision — Go** |
 
@@ -80,3 +84,8 @@
 - [ ] TODO: Choose launch channels and whether an initial release needs logo/mark assets.
 - [ ] TODO: Record Go or No-Go only after the child card's gates have fresh evidence.
 
+## Gate Evidence
+
+- 2026-09-08 first-release check: npm registry reports `zoio` is unpublished (404); `git tag --list`, `git ls-remote --tags --refs origin`, and the GitHub Releases API returned no releases or tags.
+- 2026-09-08 vulnerability-audit freshness: the newest `VULN-AUDIT.md` entry is CLEAN (2026-09-07, zero advisories), and its report mtime matches `package-lock.json` (2026-09-08T13:17:46Z).
+- 2026-09-08 publish-readiness freshness: the newest `AUDIT.md` entry is NOT READY (2026-09-07); its report mtime also matches `package-lock.json`, but it blocks progression pending CHANGELOG/release reconciliation, GitHub verification, active-card review, and pushing local release work.
