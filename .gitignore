@@ -7,5 +7,5 @@
 node_modules/
 dist/
 zoio-results/
-.claude/settings.json
-.claude/settings.local.json
+# Claude settings may contain machine-specific MCP paths or credentials.
+.claude/settings*.json
