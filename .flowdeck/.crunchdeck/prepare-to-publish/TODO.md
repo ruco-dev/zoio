@@ -23,12 +23,16 @@ nick: Casual
 >_answer_: zoio
 
 - [ ] Authenticate `gh` and verify `ruco-dev/zoio` exists with the intended visibility and canonical default branch. (AUDIT.md § 6)
+>_answer_: 
 
 - [x] Authorize review of the active cards' TODO contents to reconcile release commits, meld records, and publish conflicts. (AUDIT.md §§ 4–5)
+>_answer_: 
 
 - [ ] Resolve the card-instruction conflict: authorize reading the named active cards' `TODO.md` files despite this card's prohibition, so the release-note reconciliation can finish.
+>_answer_: 
 
 - [ ] Review and push the 20 local commits ahead of `origin/master` before publishing. (AUDIT.md § 3)
+>_answer_: 
 
 #### COMMENTS
 
