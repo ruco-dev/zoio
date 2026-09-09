@@ -33,3 +33,4 @@
 2026-09-09 .crunchdeck/launches/v0.0.0 play(Shark): in=377669 out=5426
 2026-09-09 .crunchdeck/launches/v0.0.0 play(Shark): in=185941 out=2213
 2026-09-09 .crunchdeck/_sleeve/publish-vuln-audit play(Casual): in=491784 out=9306
+2026-09-09 .crunchdeck/_sleeve/publish-readiness-audit play(Casual): in=716105 out=12648

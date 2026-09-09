@@ -6,6 +6,61 @@
 
 ### 1. Identity
 
+- `package.json` and `.flowdeck/.crunchdeck/profile/PROFILE.md` identify unscoped `zoio` as the intended package. Both `npm view zoio --json` and `npm view @ruco-dev/zoio --json` returned registry 404, so neither namespace is published and there is no twin to deprecate.
+- The local `0.1.0` has no published counterpart. `CHANGELOG.md` correctly puts `[Unreleased]` above `[0.1.0]`.
+- `src/` imports only Node built-ins and local modules; `package.json` has no runtime dependencies, so there are no undeclared or misplaced runtime dependencies.
+
+### 2. Tarball truth
+
+- The required isolated-cache command `npm pack --dry-run --json --cache "$(mktemp -d /tmp/flowdeck-npm-cache.XXXXXX)"` passed. It ran `prepack`, reported 27 files and 41,692 bytes unpacked, and included `dist/cli.js`, `README.md`, `LICENSE`, and `package.json`.
+- The inspected listing contains no `.flowdeck/`, `.claude/`, `.env`, `*.tgz`, test artifact, `node_modules`, or bundled dependency tree. Source maps ship with compiled output; they name only the corresponding `src/` paths.
+
+### 3. Git hygiene
+
+- An intermediate inspection showed a modified `.flowdeck/.crunchdeck/prepare-to-publish/TODO.md`, but it had cleared by final inspection without an audit edit; the final audit changes only add this report. The transient state is recorded as a workflow gotcha, not a release blocker.
+- `origin/master..HEAD` contains two unpushed commits: `066300c` and `e96cd1d`, both publish-vulnerability-audit deck records. `git check-ignore` found no tracked-versus-ignored contradiction, and package, lockfile, source, scripts, and CI paths are not ignored.
+- The targeted tracked-content sweep found no credential, client-data, or publishable absolute-home-path hit. Flowdeck and Claude internal files are tracked but excluded from the npm tarball.
+
+### 4. Docs drift
+
+- `README.md`, `src/cli.ts`, and `src/config.ts` agree on `scan`, `explore`, `batch`, `config`, and `version`; all documented modes, options, and four `ZOIO_*` variables exist. `LICENSE` is MIT and matches `package.json`; no dual licensing applies.
+- There are no Git tags. Commit-to-meld-to-`[Unreleased]` reconciliation could not be performed because this ritual was explicitly prohibited from reading any other `TODO.md`; this remains a blocker.
+
+### 5. Deck state
+
+- `.flowdeck/.crunchdeck/security-findings/VULN-AUDIT.md` records a `2026-09-09 — CLEAN` result with zero advisories, newer than the lockfile's last commit (`2026-09-07`), so the vulnerability gate passes.
+- `flowdeck inbox --gate` was not run by instruction; the permitted manual fallback found no `.flowdeck/_inbox/` directory. `CARD-SENDING.md` is absent.
+- Open-card conflict and false-completion verification cannot be performed without reading other cards' `TODO.md` files; this is a blocker under the supplied audit constraint.
+
+### 6. Platform & CI
+
+- `origin` and `package.json.repository` both point to `https://github.com/ruco-dev/zoio.git`. `gh repo view ruco-dev/zoio` returned HTTP 401, so existence, visibility, default branch, and canonical metadata remain unverified; this is a blocker.
+- `.github/workflows/ci.yml` runs `npm ci`, type checking, format checking, and tests on every push and pull request, with no path filters or dependency on ignored files.
+
+### 7. Build smoke
+
+- Passed: `npm run build`, `npm run lint`, `npm run format:check`, and `npm test`. Node reported 6 passing tests, 0 failures, in 2.12 s.
+
+## BLOCKERS
+
+1. Authenticate GitHub CLI and verify `ruco-dev/zoio`'s existence, intended visibility, default branch, and canonical metadata.
+2. Authorize active-card and meld-to-notes review, then reconcile commits since the initial release state with `CHANGELOG.md`.
+3. Review and push the two commits in `origin/master..HEAD` before publishing.
+
+## WARNINGS
+
+1. Confirm unscoped `zoio` immediately before the first publish: both the unscoped and `@ruco-dev/zoio` namespaces are currently unregistered.
+
+## Accepted trade-offs
+
+- Flowdeck and Claude operational files remain tracked but are excluded from the npm tarball.
+
+## 2026-09-09 — NOT READY
+
+**Scope:** npm package `zoio@0.1.0` and its intended public GitHub repository.
+
+### 1. Identity
+
 - `package.json` and `.flowdeck/.crunchdeck/profile/PROFILE.md` identify the unscoped `zoio` package. Both `npm view zoio --json` and `npm view @ruco-dev/zoio --json` returned 404, so neither namespace is published and there is no twin to deprecate.
 - Local version `0.1.0` is unpublished. `CHANGELOG.md` has an `Unreleased` section above the matching `0.1.0` entry.
 - `src/` imports only Node built-ins and local modules; there are no runtime dependencies and no undeclared package imports.
