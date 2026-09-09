@@ -37,11 +37,13 @@ nick: Shark
   and test evidence. Before publishing, recheck the intended npm package and
   version, run `npm publish`, verify the published package and global install,
   then update `LAUNCH.md` with evidence.
+  > Blocked 2026-09-09: `LAUNCH.md` and `prepare-to-publish/AUDIT.md` record NOT READY, so the required fresh READY verdict is absent and publication was not attempted.
 
 ## HUMAN
 
 - [x] Choose **Go** or **No-Go** in `LAUNCH.md` after reviewing fresh gate and validation evidence. A Go decision authorizes activation of the dormant `publish` action below; a No-Go keeps publication blocked.
 - [x] Resolve the current publish-readiness blockers, rerun the required rituals, and record a fresh READY verdict before resuming this launch card: reconcile `CHANGELOG.md` with the release history, authenticate and verify the GitHub repository, review active-card publish conflicts, and push the local release work.
+- [ ] Complete a fresh READY publish-readiness audit after GitHub verification, active-card/meld review, and push remediation; only then reactivate the `publish` BOT action.
 
 #### COMMENTS
 
@@ -49,6 +51,8 @@ nick: Shark
 - The 2026-09-08 audit command is CLEAN (0 advisories); `package-lock.json`, `VULN-AUDIT.md`, and `AUDIT.md` have matching 2026-09-08T13:50:33Z mtimes, but a new READY report cannot be produced until the readiness blockers and missing local build toolchain are resolved.
 - 2026-09-09 validation: the first clean-install attempt was blocked solely by root-owned files in the host npm cache; retrying with an isolated temporary cache passed without repository changes.
 - Mandatory doc check (2026-09-09): reviewed `README.md` and `FLOWDECK.md`; neither requires an update because this records validation only and no release has shipped.
+- Mandatory doc check (2026-09-09, publish gate): reviewed `README.md` and `FLOWDECK.md`; neither requires an update because no package was published and product capabilities are unchanged.
+- 2026-09-09 gate check: `AUDIT.md` is newer than `package-lock.json` but its current verdict is NOT READY, with GitHub verification, active-card/meld review, and pushing local commits still listed as blockers.
 
 ## ACTIONS
 
@@ -61,4 +65,4 @@ nick: Shark
 - Publication remains dormant until the recorded CLEAN/READY audit gates and release decision are reconciled in `LAUNCH.md`.
 
 <!-- next: Shark -->
-<!-- tokens 2026-09-09 play(Shark): in=377669 out=5426 -->
+<!-- tokens 2026-09-09 play(Shark): in=185941 out=2213 -->
