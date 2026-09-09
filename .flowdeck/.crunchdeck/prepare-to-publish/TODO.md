@@ -34,7 +34,7 @@ nick: Casual
 - [x] Review and push the 20 local commits ahead of `origin/master` before publishing. (AUDIT.md § 3)
 >_answer_: Done, please confirm
 
-- [ ] Complete the MVP scope review on `.flowdeck/create-mvp/TODO.md` before publishing; its only remaining item is the human release-scope approval.
+- [x] Complete the MVP scope review on `.flowdeck/create-mvp/TODO.md` before publishing; its only remaining item is the human release-scope approval.
 
 #### COMMENTS
 
