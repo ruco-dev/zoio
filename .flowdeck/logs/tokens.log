@@ -29,3 +29,4 @@
 2026-09-08 .crunchdeck/_sleeve/publish-vuln-audit play(Casual): in=420564 out=8215
 2026-09-09 .crunchdeck/_sleeve/publish-readiness-audit play(Casual): in=354655 out=9862
 2026-09-09 .crunchdeck/prepare-to-publish play(Casual): in=139764 out=1903
+2026-09-09 .crunchdeck/prepare-to-publish play(Casual): in=252228 out=4352

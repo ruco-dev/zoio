@@ -19,6 +19,13 @@ nick: Casual
 
 ## HUMAN
 
+#### COMMENTS
+
+> 2026-09-09: Replay validation passed all declared checks and the 27-file dry-run tarball check using an isolated npm cache. The default npm cache has root-owned files; GitHub API access failed, and local `origin/master` remains 15 commits behind `HEAD`.
+
+- [ ] Confirm the release commits are pushed: local `origin/master` still reports 15 commits behind `HEAD`, while GitHub API verification is unavailable from this environment. (AUDIT.md § 3)
+  > Evidence: `git log origin/master..HEAD` lists 15 deck/release commits; `gh repo view ruco-dev/zoio` could not connect to api.github.com on 2026-09-09.
+
 - [x] Create the missing product profile and decide whether unscoped `zoio` or `@ruco-dev/zoio` is canonical; deprecate a twin only if one is later published. (AUDIT.md § 1)
 >_answer_: zoio
 
@@ -62,4 +69,4 @@ README.md needed no change; FLOWDECK.md now records the completed reconciliation
 Replay validation on 2026-09-09 passed all declared checks: type check, format check, and 6 source tests.
 
 <!-- next: Casual -->
-<!-- tokens 2026-09-09 play(Casual): in=139764 out=1903 -->
+<!-- tokens 2026-09-09 play(Casual): in=252228 out=4352 -->
