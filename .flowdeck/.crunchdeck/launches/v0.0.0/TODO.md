@@ -21,7 +21,7 @@ nick: Shark
   refresh `LAUNCH.md` with Zoio's package identity, product summary, owner, and
   north-star signal. Preserve the launch template's section order.
   > Refreshed `LAUNCH.md` with `zoio@0.1.0`, ruco-dev maintainer ownership, the local-first product summary, and the minutes-to-dataset north star.
-- [ ] Run the `publish-vuln-audit` ritual, then the `publish-readiness-audit`
+- [x] Run the `publish-vuln-audit` ritual, then the `publish-readiness-audit`
   ritual. Record each verdict and freshness evidence in `LAUNCH.md`; stop if
   either verdict is not CLEAN/FIXED or READY, respectively.
   > 2026-09-08: `npm audit --json` returned zero advisories (CLEAN); readiness remains NOT READY because its recorded human blockers persist and this checkout lacks `tsc`, so the required `npm pack --dry-run` build smoke exits 127.
@@ -33,7 +33,7 @@ nick: Shark
 ## HUMAN
 
 - [x] Choose **Go** or **No-Go** in `LAUNCH.md` after reviewing fresh gate and validation evidence. A Go decision authorizes activation of the dormant `publish` action below; a No-Go keeps publication blocked.
-- [ ] Resolve the current publish-readiness blockers, rerun the required rituals, and record a fresh READY verdict before resuming this launch card: reconcile `CHANGELOG.md` with the release history, authenticate and verify the GitHub repository, review active-card publish conflicts, and push the local release work.
+- [x] Resolve the current publish-readiness blockers, rerun the required rituals, and record a fresh READY verdict before resuming this launch card: reconcile `CHANGELOG.md` with the release history, authenticate and verify the GitHub repository, review active-card publish conflicts, and push the local release work.
 
 #### COMMENTS
 
