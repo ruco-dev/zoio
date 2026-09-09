@@ -31,6 +31,12 @@ nick: Shark
 - [x] Verify a clean-environment install and the documented fixture quickstart;
   record the exact commands and outcomes in `LAUNCH.md`.
   > 2026-09-09T08:44:02Z: packed `zoio@0.1.0`, installed it into a fresh `/private/tmp` prefix, and the installed CLI completed the README fixture scan with all five JSONL files.
+  
+- [ ] publish — Activate only after a recorded **Go** decision, fresh CLEAN/FIXED
+  vulnerability and READY publish-readiness verdicts, and passing build, lint,
+  and test evidence. Before publishing, recheck the intended npm package and
+  version, run `npm publish`, verify the published package and global install,
+  then update `LAUNCH.md` with evidence.
 
 ## HUMAN
 
@@ -46,11 +52,6 @@ nick: Shark
 
 ## ACTIONS
 
-- [ ] publish — Activate only after a recorded **Go** decision, fresh CLEAN/FIXED
-  vulnerability and READY publish-readiness verdicts, and passing build, lint,
-  and test evidence. Before publishing, recheck the intended npm package and
-  version, run `npm publish`, verify the published package and global install,
-  then update `LAUNCH.md` with evidence.
 
 ## OUTCOME
 
