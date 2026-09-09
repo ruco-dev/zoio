@@ -1,6 +1,6 @@
 # Launch: Zoio v0.0.0
 
-**Package:** `zoio` (unscoped; local version `0.1.0`)
+**Package:** `@ruco-dev/zoio` (scoped public package; local version `0.1.0`)
 **Target date:** TBD — set after launch gates are green
 **Owner:** ruco-dev repository maintainer
 **Status:** Preparing first release
@@ -15,7 +15,7 @@
 > dashboard.
 
 **North-star signal:** a developer reaches a saved, structured visibility dataset
-from `npm install -g zoio` in minutes, not hours.
+from `npm install -g @ruco-dev/zoio` in minutes, not hours.
 
 ---
 
@@ -23,7 +23,7 @@ from `npm install -g zoio` in minutes, not hours.
 
 - [x] First-release status verified: no applicable npm publication, git tag, or non-baseline release exists
   > 2026-09-08: `npm view zoio versions --json` returned registry 404; local and remote tag lists and GitHub Releases API were empty.
-- [ ] Published to npm as `zoio` at the approved version
+- [ ] Published to npm as `@ruco-dev/zoio` at the approved version
 - [ ] Version tag and CHANGELOG entry created for the approved release
 - [ ] Clean-environment install and documented fixture quickstart verified
 - [ ] Breaking-change assessment recorded (initial release expected; verify)
@@ -54,7 +54,7 @@ from `npm install -g zoio` in minutes, not hours.
 
 ## Measurement
 
-- [ ] North-star instrumentation plan recorded: time from `npm install -g zoio` to a saved structured visibility dataset
+- [ ] North-star instrumentation plan recorded: time from `npm install -g @ruco-dev/zoio` to a saved structured visibility dataset
 - [ ] Pre-launch baseline captured
 
 ## Go / No-Go

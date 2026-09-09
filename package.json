@@ -1,5 +1,5 @@
 {
-  "name": "zoio",
+  "name": "@ruco-dev/zoio",
   "version": "0.1.0",
   "description": "Local-first AI search visibility scanner",
   "license": "MIT",

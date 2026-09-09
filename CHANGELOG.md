@@ -6,6 +6,7 @@ All notable changes to Zoio are documented in this file.
 
 ### Changed
 
+- The npm package identity is now `@ruco-dev/zoio`; the CLI command remains `zoio`.
 - Added continuous integration for clean-clone checks, formatting, and tests.
 - Excluded compiled test artifacts from the npm package.
 

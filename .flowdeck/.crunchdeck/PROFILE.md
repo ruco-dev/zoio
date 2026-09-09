@@ -1,6 +1,6 @@
 # Profile: Zoio
 
-**Package:** zoio
+**Package:** @ruco-dev/zoio
 **Tier:** open infrastructure
 **Status:** Phase 0 — Local CLI MVP (pre-release)
 **Updated:** 2026-09-08
@@ -23,7 +23,7 @@ Zoio is an open-source command-line tool that scans AI-generated answers for a l
 
 ## Success Signal
 
-**North star:** Time from `npm install -g zoio` to a saved, structured visibility dataset for a real query (target: minutes, not hours) — the MVP succeeds if a developer can run `zoio scan` and `zoio explore` and get queries, responses, entities, and citations they can immediately inspect or script against.
+**North star:** Time from `npm install -g @ruco-dev/zoio` to a saved, structured visibility dataset for a real query (target: minutes, not hours) — the MVP succeeds if a developer can run `zoio scan` and `zoio explore` and get queries, responses, entities, and citations they can immediately inspect or script against.
 
 ## Core Features
 
@@ -62,7 +62,7 @@ Zoio is an open-source command-line tool that scans AI-generated answers for a l
 
 ## Content Angle
 
-Every AI-visibility tool right now asks you to trust a hosted dashboard and hand over a seat fee before you've seen a single result. Zoio's launch story is the opposite bet: `npm install -g zoio`, run one scan, and you have a real structured dataset — queries, entities, citations, target position — on your own machine in minutes, before any conversation about cloud or pricing.
+Every AI-visibility tool right now asks you to trust a hosted dashboard and hand over a seat fee before you've seen a single result. Zoio's launch story is the opposite bet: `npm install -g @ruco-dev/zoio`, run one scan, and you have a real structured dataset — queries, entities, citations, target position — on your own machine in minutes, before any conversation about cloud or pricing.
 
 ## Open Questions
 
