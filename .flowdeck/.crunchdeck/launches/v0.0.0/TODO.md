@@ -25,10 +25,12 @@ nick: Shark
   ritual. Record each verdict and freshness evidence in `LAUNCH.md`; stop if
   either verdict is not CLEAN/FIXED or READY, respectively.
   > 2026-09-08: `npm audit --json` returned zero advisories (CLEAN); readiness remains NOT READY because its recorded human blockers persist and this checkout lacks `tsc`, so the required `npm pack --dry-run` build smoke exits 127.
-- [ ] Run `npm run build`, `npm run lint`, and `npm test`; record the commands,
+- [x] Run `npm run build`, `npm run lint`, and `npm test`; record the commands,
   outcomes, and timestamps in `LAUNCH.md`. Do not proceed on a failure.
-- [ ] Verify a clean-environment install and the documented fixture quickstart;
+  > 2026-09-09T08:43:37Z–08:43:42Z: `npm run build`, `npm run lint`, and `npm test` passed; the test suite reports 6 passed, 0 failed.
+- [x] Verify a clean-environment install and the documented fixture quickstart;
   record the exact commands and outcomes in `LAUNCH.md`.
+  > 2026-09-09T08:44:02Z: packed `zoio@0.1.0`, installed it into a fresh `/private/tmp` prefix, and the installed CLI completed the README fixture scan with all five JSONL files.
 
 ## HUMAN
 
@@ -39,7 +41,8 @@ nick: Shark
 
 - The readiness report is fresh relative to `package-lock.json` but explicitly NOT READY; per the launch gate, build/lint/test and clean-install validation were not run.
 - The 2026-09-08 audit command is CLEAN (0 advisories); `package-lock.json`, `VULN-AUDIT.md`, and `AUDIT.md` have matching 2026-09-08T13:50:33Z mtimes, but a new READY report cannot be produced until the readiness blockers and missing local build toolchain are resolved.
-- Mandatory doc check: reviewed `README.md` and `FLOWDECK.md`; neither describes a completed release, so no documentation update is appropriate while this launch remains blocked.
+- 2026-09-09 validation: the first clean-install attempt was blocked solely by root-owned files in the host npm cache; retrying with an isolated temporary cache passed without repository changes.
+- Mandatory doc check (2026-09-09): reviewed `README.md` and `FLOWDECK.md`; neither requires an update because this records validation only and no release has shipped.
 
 ## ACTIONS
 
@@ -49,5 +52,12 @@ nick: Shark
   version, run `npm publish`, verify the published package and global install,
   then update `LAUNCH.md` with evidence.
 
+## OUTCOME
+
+- Fresh source gates passed: `npm run build`, `npm run lint`, and `npm test` completed successfully, with 6 tests passing.
+- The packed `zoio@0.1.0` artifact installed in a fresh temporary prefix using an isolated npm cache.
+- Its installed `zoio` binary completed the documented fixture scan and wrote queries, responses, entities, citations, and runs JSONL files.
+- Publication remains dormant until the recorded CLEAN/READY audit gates and release decision are reconciled in `LAUNCH.md`.
+
 <!-- next: Shark -->
-<!-- tokens 2026-09-08 play(Shark): in=180176 out=3350 -->
+<!-- tokens 2026-09-09 play(Shark): in=377669 out=5426 -->

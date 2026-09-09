@@ -61,9 +61,9 @@ from `npm install -g zoio` in minutes, not hours.
 
 | Gate | Owner | Decision |
 |---|---|---|
-| Fresh vulnerability audit is CLEAN/FIXED | TBD — repository maintainer | Awaiting evidence |
+| Fresh vulnerability audit is CLEAN/FIXED | TBD — repository maintainer | **CLEAN — 2026-09-08 (0 advisories)** |
 | Publish-readiness audit is READY | ruco-dev repository maintainer | **Blocked — 2026-09-07 NOT READY audit is current but requires remediation** |
-| Build, lint, test, and clean-install checks pass | TBD — repository maintainer | Awaiting evidence |
+| Build, lint, test, and clean-install checks pass | TBD — repository maintainer | **Passed — 2026-09-09** |
 | All checklist sections green | TBD — repository maintainer | **Human decision — Go** |
 
 ## Kill / Rollback Criteria
@@ -86,6 +86,11 @@ from `npm install -g zoio` in minutes, not hours.
 
 ## Gate Evidence
 
+- 2026-09-09T08:43:37Z: `npm run build` passed (`tsc -p tsconfig.json`, exit 0).
+- 2026-09-09T08:43:40Z: `npm run lint` passed (`npm run check` → `tsc --noEmit`, exit 0).
+- 2026-09-09T08:43:42Z: `npm test` passed (build plus Node test runner: 6 passed, 0 failed; duration 1,959.191166ms).
+- 2026-09-09T08:44:02Z clean-environment validation: `npm_config_cache="$launch_tmp/npm-cache" npm pack --pack-destination "$launch_tmp"`, `npm_config_cache="$launch_tmp/npm-cache" npm install --prefix "$launch_tmp/installed" "$tarball"`, then `"$launch_tmp/installed/node_modules/.bin/zoio" scan Porto hotel --mode fixture --target "Example Hotel" --output "$launch_tmp/results"` passed in `/private/tmp/zoio-launch-pZGZNV`. The installed CLI reported `Mentioned: YES` at position 1 and created `queries.jsonl`, `responses.jsonl`, `entities.jsonl`, `citations.jsonl`, and `runs.jsonl` under `/private/tmp/zoio-launch-pZGZNV/results`.
+- The initial clean-install command failed before packaging because the host cache at `/Users/ruco/.npm` contains root-owned files; the isolated temporary cache retry above passed and did not alter the repository.
 - 2026-09-08 vulnerability audit: `npm audit --json` completed with critical: 0, high: 0, moderate: 0, low: 0, info: 0 (CLEAN). `package-lock.json` and `security-findings/VULN-AUDIT.md` both have mtime `2026-09-08T13:50:33Z`.
 - 2026-09-08 readiness replay: NOT READY. The recorded release-history, GitHub verification, active-card review, and push blockers remain unresolved; additionally, this checkout has no local `tsc`, so `npm pack --dry-run` cannot complete its `prepack` build (exit 127). `package-lock.json` and `prepare-to-publish/AUDIT.md` both have mtime `2026-09-08T13:50:33Z`.
 - 2026-09-08 first-release check: npm registry reports `zoio` is unpublished (404); `git tag --list`, `git ls-remote --tags --refs origin`, and the GitHub Releases API returned no releases or tags.
