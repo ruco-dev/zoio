@@ -9,7 +9,7 @@
   },
   "type": "module",
   "bin": {
-    "zoio": "./dist/cli.js"
+    "zoio": "dist/cli.js"
   },
   "files": [
     "dist",
