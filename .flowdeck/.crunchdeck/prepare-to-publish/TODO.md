@@ -50,6 +50,8 @@ nick: Casual
 
 > 2026-09-08: Replayed card: README.md and FLOWDECK.md still need no update; validation could not run because this checkout lacks `tsc`, and GitHub verification could not reach api.github.com.
 
+> 2026-09-09: Replayed card: `tsc` is available; `npm run check`, `npm run format:check`, and `npm test` pass (6/6). README.md and FLOWDECK.md remain accurate; the sole open gate is the human MVP-scope approval on `create-mvp`.
+
 ## OUTCOME
 
 Added and reconciled the initial `CHANGELOG.md` at `/Users/ruco/ruco-dev/pills-incubator/zoio/CHANGELOG.md`.
@@ -57,5 +59,7 @@ The 0.1.0 notes now trace to the completed MVP and Codex-streaming delivery card
 `npm run check`, `npm run format:check`, and `npm test` pass, with 6 tests passing and 0 failing.
 README.md needed no change; FLOWDECK.md now records the completed reconciliation and remaining human MVP-scope/repository gates.
 
+Replay validation on 2026-09-09 passed all declared checks: type check, format check, and 6 source tests.
+
 <!-- next: Casual -->
-<!-- tokens 2026-09-08 play(Casual): in=139305 out=2372 -->
+<!-- tokens 2026-09-09 play(Casual): in=139764 out=1903 -->
